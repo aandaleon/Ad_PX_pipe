@@ -5,7 +5,7 @@ This repository reorganizes and restructures scripts from ["Analysis of the gene
 
 02. Calculate principal components and a relationship matrix in [KING](http://people.virginia.edu/~wc9c/KING/manual.html)
 
-  * `<Rscript 02_relate_matrix_PCs.R --bfile AMR_chr22>`
+    * `<Rscript 02_relate_matrix_PCs.R --bfile AMR_chr22>`
 
 03. Produce phenotypes and covariates (ex. medicines) in R
  
