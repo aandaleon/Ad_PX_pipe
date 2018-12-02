@@ -25,9 +25,9 @@ This repository reorganizes and restructures scripts from ["Analysis of the gene
 
 05. Perform a genome wide association study in [GEMMA](http://www.xzlab.org/software/GEMMAmanual.pdf)
     * Convert from PrediXcan dosage format to BIMBAM format (GEMMA genotype input)
-      * `python 05a_PrediXcan_dosages_to_GEMMA.py --dosage_path dosages/ --dosage_suffix .txt.gz`
+      * 05a. `python 05a_PrediXcan_dosages_to_GEMMA.py --dosage_path dosages/ --dosage_suffix .txt.gz`
     * Make covariance file from known covariates and KING PCs
-      * `Rscript 05b_make_GEMMA_covars.R --covar covar_woIID.txt`
+      * 05b. `Rscript 05b_make_GEMMA_covars.R --covar covar_woIID.txt`
 
 06. Calculate predicted gene expressions in [PrediXcan](https://github.com/hakyimlab/PrediXcan) using [GTEx](http://predictdb.org/) and [MESA](https://github.com/aandaleon/DivPop) models
 
