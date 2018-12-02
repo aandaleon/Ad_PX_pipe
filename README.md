@@ -3,6 +3,9 @@ This repository reorganizes and restructures scripts from ["Analysis of the gene
 
 00. Produce phenotypes and covariates (ex. medicines) in R (for test data only)
 
+    * `Rscript 00_simulate_pheno_covar.R --bfile AMR`
+    * Note: may have to cheat and change this later to force some to be significant
+
 01. Perform quality control in [PLINK](https://www.cog-genomics.org/plink/1.9/filter) using [gwasqc_pipeline](https://github.com/WheelerLab/gwasqc_pipeline)
 
 02. Calculate principal components and a relationship matrix in [KING](http://people.virginia.edu/~wc9c/KING/manual.html)
