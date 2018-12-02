@@ -4,7 +4,7 @@ library(dplyr)
 "%&%" = function(a, b) paste(a, b, sep = "")
 
 parser <- ArgumentParser()
-parser$add_argument("--desc", help = "This script simulates phenotypes and covariates to use with the sample data set, AMR.")
+parser$add_argument("--desc", help = "This script simulates phenotypes and covariates to use with the sample data set, AMR. Note: the first column of the covariates file must be a column of 1's.")
 parser$add_argument("--bfile", help = "PLINK-format genotypes")
 args <- parser$parse_args()
 
