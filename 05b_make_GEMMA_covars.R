@@ -1,5 +1,6 @@
 library(argparse)
 library(data.table)
+library(dplyr)
 "%&%" = function(a, b) paste(a, b, sep = "")
 
 parser <- ArgumentParser()
@@ -12,7 +13,7 @@ args <- parser$parse_args()
 
 covar_file_name <- args$covar
 pcs_file_name <- args$pcs_file
-pcs_num <- as.integer(pcs_num)
+pcs_num <- as.integer(args$pcs_num)
 output <- args$output
 
 '
@@ -27,3 +28,4 @@ old_covars <- fread(covar_file_name)
 pcs_to_keep <- KING_pcs[, 7:(6 + 5)]
 new_covars <- cbind(old_covars, pcs_to_keep)
 fwrite(new_covars, output, sep = "\t", row.names = F, col.names = F, na = "NA", quote = F)
+
