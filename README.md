@@ -11,6 +11,8 @@ This repository reorganizes and restructures scripts from ["Analysis of the gene
  
 03. Impute data with the [Michigan Imputation Server](https://imputationserver.sph.umich.edu/index.html#!)
 
+04. Convert imputed data to PrediXcan dosages using [this script](https://github.com/WheelerLab/Imputation/blob/master/UMich_vcf2pxfixCAAPA.py).
+
 04. Perform a genome wide association study in [GEMMA](http://www.xzlab.org/software/GEMMAmanual.pdf)
 
 05. Calculate predicted gene expressions in [PrediXcan](https://github.com/hakyimlab/PrediXcan) using [GTEx](http://predictdb.org/) and [MESA](https://github.com/aandaleon/DivPop) models
