@@ -1,21 +1,16 @@
 # Ad_PX_pipe
-This repository reorganizes and restructures scripts from ["Analysis of the genetic architecture and predicted gene expression of lipid traits in Hispanic cohorts"](https://github.com/WheelerLab/px_his_chol) to be more user-friendly. We will be using genotypes from 1000 Genomes American superpopulation and simulating phenotypes and covariances in R. For exact details on the inner workings of each script, use the `--help` flag. All paths to softwares are defaulted to those on wheelerlab3, with genotypes available at `/home/angela/Ad_PX_pipe/AMR`. Note: test data has been randomly subset into 100,000 SNPs for speed.
+This repository reorganizes and restructures scripts from ["Analysis of the genetic architecture and predicted gene expression of lipid traits in Hispanic cohorts"](https://github.com/WheelerLab/px_his_chol) to be more user-friendly. We will be using genotypes from 1000 Genomes American superpopulation and simulating phenotypes and covariances in R. For exact details on the inner workings of each script, use the `--help` flag or see the README_supplement in this repository. All paths to softwares are defaulted to those on wheelerlab3, with genotypes available at `/home/angela/Ad_PX_pipe/AMR`.\
 
 00. Produce phenotypes and covariates (ex. medicines) in R (for test data only)
-
     * `Rscript 00_simulate_pheno_covar.R --bfile AMR`
-    * Note: may have to cheat and change this later to force some to be significant
 
 01. Perform quality control in [PLINK](https://www.cog-genomics.org/plink/1.9/filter) using [gwasqc_pipeline](https://github.com/WheelerLab/gwasqc_pipeline)
-    
     * Test data has already been filtered
 
 02. Calculate principal components and a relationship matrix in [KING](http://people.virginia.edu/~wc9c/KING/manual.html)
-
     * `plink --bfile AMR --chr 22 --make-bed --out AMR_chr22; Rscript 02_relate_matrix_PCs.R --bfile AMR_chr22`
  
 03. Impute data with the [Michigan Imputation Server](https://imputationserver.sph.umich.edu/index.html#!)
-
     * Test data is already imputed
     * Follow instructions in 03_Michigan_Imputation_Server.pptx
 
@@ -44,7 +39,7 @@ This repository reorganizes and restructures scripts from ["Analysis of the gene
 
 08. Find significant SNPs from GWAS and significant genes from PrediXcan in R
     * `python 08_sig_SNP_sig_gene.py --SNP_sig 5e-4 --gene_sig 0.05 --input_prefix AMR_`
-      * NOTE: I set these thresholds arbitrarilty low so we have significance genes to with with later. Usually, use the defaults, 5e-8 and 9.654e-6, respectively.
+      * NOTE: I set these thresholds arbitrarilty low so we have significant genes to with with later. Usually, use the defaults, 5e-8 and 9.654e-6, respectively.
 
 09. Calculate independent significant SNPs in a joint analysis in [GCTA-COJO](https://cnsgenomics.com/software/gcta/#COJO)
 
