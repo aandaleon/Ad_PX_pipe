@@ -43,7 +43,8 @@ This repository reorganizes and restructures scripts from ["Analysis of the gene
       * `bash 05c_GEMMA_loop.sh -g pred_exp_GEMMA/ -p pheno_woIID.txt -a anno/anno -k relatedness_woIID.txt -c GEMMA_covars.txt -o AMR_ -h`    
 
 08. Find significant SNPs from GWAS and significant genes from PrediXcan in R
-    * `python 08_sig_SNP_sig_gene.py --SNP_sig 5e-8 --gene_sig 9.654e-6 --input_prefix AMR_`
+    * `python 08_sig_SNP_sig_gene.py --SNP_sig 5e-4 --gene_sig 0.05 --input_prefix AMR_`
+      * NOTE: I set these thresholds arbitrarilty low so we have significance genes to with with later. Usually, use the defaults, 5e-8 and 9.654e-6, respectively.
 
 09. Calculate independent significant SNPs in a joint analysis in [GCTA-COJO](https://cnsgenomics.com/software/gcta/#COJO)
 
