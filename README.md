@@ -1,5 +1,5 @@
 # Ad_PX_pipe
-This repository reorganizes and restructures scripts from ["Analysis of the genetic architecture and predicted gene expression of lipid traits in Hispanic cohorts"](https://github.com/WheelerLab/px_his_chol) to be more user-friendly. We will be using genotypes from 1000 Genomes American superpopulation and simulating phenotypes and covariances in R. For exact details on the inner workings of each script, use the `--help` flag. All paths to softwares are defaulted to those on wheelerlab3, with genotypes available at `/home/angela/Ad_PX_pipe/AMR`.
+This repository reorganizes and restructures scripts from ["Analysis of the genetic architecture and predicted gene expression of lipid traits in Hispanic cohorts"](https://github.com/WheelerLab/px_his_chol) to be more user-friendly. We will be using genotypes from 1000 Genomes American superpopulation and simulating phenotypes and covariances in R. For exact details on the inner workings of each script, use the `--help` flag. All paths to softwares are defaulted to those on wheelerlab3, with genotypes available at `/home/angela/Ad_PX_pipe/AMR`. Note: test data has been randomly subset into 100,000 SNPs for speed.
 
 00. Produce phenotypes and covariates (ex. medicines) in R (for test data only)
 
@@ -22,12 +22,15 @@ This repository reorganizes and restructures scripts from ["Analysis of the gene
 04. Convert imputed data to PrediXcan dosages using [this script](https://github.com/WheelerLab/Imputation/blob/master/UMich_vcf2pxfixCAAPA.py).
 
     * Since test data is already imputed in PLINK format, used [this script](https://github.com/hakyimlab/PrediXcan/blob/master/Software/convert_plink_to_dosage.py) instead
+      * `mkdir dosages/; cd dosages/; wget https://raw.githubusercontent.com/hakyimlab/PrediXcan/master/Software/convert_plink_to_dosage.py; awk '{ print $1"\t"$2 }' ../AMR.fam > samples.txt; python convert_plink_to_dosage.py -b ../AMR -p /usr/local/bin/plink; cd ..`
 
 05. Perform a genome wide association study in [GEMMA](http://www.xzlab.org/software/GEMMAmanual.pdf)
     * a. Convert from PrediXcan dosage format to BIMBAM format (GEMMA genotype input)
       * `python 05a_PrediXcan_dosages_to_GEMMA.py --dosage_path dosages/ --dosage_suffix .txt.gz`
     * b. Make covariance file from known covariates and KING PCs
-      * `Rscript 05b_make_GEMMA_covars.R --covar covar_woIID.txt`
+      * `Rscript 05b_make_GEMMA_covars.R --covar covar_woIID.txt --pcs_file kingpc.ped --pcs_num 5 --output GEMMA_covars.txt`
+    * c. Run all chrs. in a loop
+      * `bash 05c_GEMMA_loop.sh -g BIMBAM/chr -p pheno_woIID.txt -a anno/anno -k relatedness_woIID.txt -c GEMMA_covars.txt -o AMR`
 
 06. Calculate predicted gene expressions in [PrediXcan](https://github.com/hakyimlab/PrediXcan) using [GTEx](http://predictdb.org/) and [MESA](https://github.com/aandaleon/DivPop) models
 
