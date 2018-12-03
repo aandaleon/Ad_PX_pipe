@@ -1,5 +1,5 @@
 # Ad_PX_pipe
-This repository reorganizes and restructures scripts from ["Analysis of the genetic architecture and predicted gene expression of lipid traits in Hispanic cohorts"](https://github.com/WheelerLab/px_his_chol) to be more user-friendly. We will be using genotypes from 1000 Genomes American superpopulation and simulating phenotypes and covariances in R. For exact details on the inner workings of each script, use the `--help` flag or see the README_supplement in this repository. All paths to softwares are defaulted to those on wheelerlab3, with genotypes available at `/home/angela/Ad_PX_pipe/AMR`.\
+This repository reorganizes and restructures scripts from ["Analysis of the genetic architecture and predicted gene expression of lipid traits in Hispanic cohorts"](https://github.com/WheelerLab/px_his_chol) to be more user-friendly. We will be using genotypes from 1000 Genomes American superpopulation and simulating phenotypes and covariances in R. For exact details on the inner workings of each script, use the `--help` flag or see the README_supplement in this repository. All paths to softwares are defaulted to those on wheelerlab3, with genotypes available at `/home/angela/Ad_PX_pipe/AMR`, and it is expected that all scripts are run from the same directory.
 
 00. Produce phenotypes and covariates (ex. medicines) in R (for test data only)
     * `Rscript 00_simulate_pheno_covar.R --bfile AMR`
@@ -43,9 +43,10 @@ This repository reorganizes and restructures scripts from ["Analysis of the gene
 
 09. Calculate independent significant SNPs in a joint analysis in [GCTA-COJO](https://cnsgenomics.com/software/gcta/#COJO)
     * a. Make GWAS output into GCTA-COJO format 
-      * `fam_num=$(cat AMR.fam | wc -l); cat output/AMR_chr*assoc.txt | awk ' {print $2"\t"$5"\t"$6"\t"$7"\t"$8"\t"$9"\t"$12"\t"'$fam_num'} '  > AMR.ma`
-        * Replace AMR.fam and AMR_ with your respective data and AMR.ma with your desired output
-    
+      * `python 09a_GEMMA_to_GCTA-COJO.py --fam AMR.fam --GWAS_prefix AMR_ --output_prefix AMR`
+    * b. Run GCTA (this is not a script, this is actual gcta)
+      * `gcta64 --cojo-file AMR.ma --cojo-slct --cojo-p 5e-4 --bfile AMR --cojo-actual-geno --out AMR`
+        * Again, set P arbitrarily low for example; set to 5e-8 for real analyses
 
 10. Perform colocalization between GWAS results and eQTL data using [COLOC](https://cran.r-project.org/web/packages/coloc/coloc.pdf) in a [COLOC wrapper](https://github.com/hakyimlab/summary-gwas-imputation)
 
