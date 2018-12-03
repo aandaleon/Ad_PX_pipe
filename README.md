@@ -31,6 +31,7 @@ This repository reorganizes and restructures scripts from ["Analysis of the gene
       * `Rscript 05b_make_GEMMA_covars.R --covar covar_woIID.txt --pcs_file kingpc.ped --pcs_num 5 --output GEMMA_covars.txt`
     * c. Run all chrs. in a loop
       * `bash 05c_GEMMA_loop.sh -g BIMBAM/chr -p pheno_woIID.txt -a anno/anno -k relatedness_woIID.txt -c GEMMA_covars.txt -o AMR_`
+      * Note to self: make easier to iterate through more than one pheno
 
 06. Calculate predicted gene expressions in [PrediXcan](https://github.com/hakyimlab/PrediXcan) using [GTEx](http://predictdb.org/) and [MESA](https://github.com/aandaleon/DivPop) models
     * `python 06_make_pred_exp.py --dosages_path dosages/ --output_prefix pred_exp/`
@@ -42,6 +43,7 @@ This repository reorganizes and restructures scripts from ["Analysis of the gene
       * `bash 05c_GEMMA_loop.sh -g pred_exp_GEMMA/ -p pheno_woIID.txt -a anno/anno -k relatedness_woIID.txt -c GEMMA_covars.txt -o AMR_ -h`    
 
 08. Find significant SNPs from GWAS and significant genes from PrediXcan in R
+    * `python 08_sig_SNP_sig_gene.py --SNP_sig 5e-8 --gene_sig 9.654e-6 --input_prefix AMR_`
 
 09. Calculate independent significant SNPs in a joint analysis in [GCTA-COJO](https://cnsgenomics.com/software/gcta/#COJO)
 
