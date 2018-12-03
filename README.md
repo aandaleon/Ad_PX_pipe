@@ -42,6 +42,10 @@ This repository reorganizes and restructures scripts from ["Analysis of the gene
       * NOTE: I set these thresholds arbitrarilty low so we have significant genes to with with later. Usually, use the defaults, 5e-8 and 9.654e-6, respectively.
 
 09. Calculate independent significant SNPs in a joint analysis in [GCTA-COJO](https://cnsgenomics.com/software/gcta/#COJO)
+    * a. Make GWAS output into GCTA-COJO format 
+      * `fam_num=$(cat AMR.fam | wc -l); cat output/AMR_chr*assoc.txt | awk ' {print $2"\t"$5"\t"$6"\t"$7"\t"$8"\t"$9"\t"$12"\t"'$fam_num'} '  > AMR.ma`
+        * Replace AMR.fam and AMR_ with your respective data and AMR.ma with your desired output
+    
 
 10. Perform colocalization between GWAS results and eQTL data using [COLOC](https://cran.r-project.org/web/packages/coloc/coloc.pdf) in a [COLOC wrapper](https://github.com/hakyimlab/summary-gwas-imputation)
 
