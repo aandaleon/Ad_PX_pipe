@@ -30,7 +30,7 @@ This repository reorganizes and restructures scripts from ["Analysis of the gene
     * b. Make covariance file from known covariates and KING PCs
       * `Rscript 05b_make_GEMMA_covars.R --covar covar_woIID.txt --pcs_file kingpc.ped --pcs_num 5 --output GEMMA_covars.txt`
     * c. Run all chrs. in a loop
-      * `bash 05c_GEMMA_loop.sh -g BIMBAM/chr -p pheno_woIID.txt -a anno/anno -k relatedness_woIID.txt -c GEMMA_covars.txt -o AMR`
+      * `bash 05c_GEMMA_loop.sh -g BIMBAM/chr -p pheno_woIID.txt -a anno/anno -k relatedness_woIID.txt -c GEMMA_covars.txt -o AMR_`
 
 06. Calculate predicted gene expressions in [PrediXcan](https://github.com/hakyimlab/PrediXcan) using [GTEx](http://predictdb.org/) and [MESA](https://github.com/aandaleon/DivPop) models
 
