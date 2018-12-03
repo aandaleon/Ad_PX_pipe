@@ -33,8 +33,14 @@ This repository reorganizes and restructures scripts from ["Analysis of the gene
       * `bash 05c_GEMMA_loop.sh -g BIMBAM/chr -p pheno_woIID.txt -a anno/anno -k relatedness_woIID.txt -c GEMMA_covars.txt -o AMR_`
 
 06. Calculate predicted gene expressions in [PrediXcan](https://github.com/hakyimlab/PrediXcan) using [GTEx](http://predictdb.org/) and [MESA](https://github.com/aandaleon/DivPop) models
+    * `python 06_make_pred_exp.py --dosages_path dosages/ --output_prefix pred_exp/`
 
 07. Perform an imputed transcriptome-based association study in [GEMMA](http://www.xzlab.org/software/GEMMAmanual.pdf)
+    * Convert predicted expression to GEMMA-style pseudo-genotypes
+      * ``
+    * Run all pops. and tissues in a loop
+      * ``
+      
 
 08. Find significant SNPs from GWAS and significant genes from PrediXcan in R
 
