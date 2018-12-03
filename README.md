@@ -37,7 +37,7 @@ This repository reorganizes and restructures scripts from ["Analysis of the gene
 
 07. Perform an imputed transcriptome-based association study in [GEMMA](http://www.xzlab.org/software/GEMMAmanual.pdf)
     * Convert predicted expression to GEMMA-style pseudo-genotypes
-      * ``
+      * `python 07a_convert_PrediXcan_to_GEMMA.py --pred_exp_prefix pred_exp/ --output_prefix pred_exp_GEMMA/`
     * Run all pops. and tissues in a loop
       * ``
       
