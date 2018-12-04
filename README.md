@@ -1,5 +1,7 @@
 # Ad_PX_pipe
-This repository reorganizes and restructures scripts from ["Analysis of the genetic architecture and predicted gene expression of lipid traits in Hispanic cohorts"](https://github.com/WheelerLab/px_his_chol) to be more user-friendly. We will be using genotypes from 1000 Genomes American superpopulation and simulating phenotypes and covariances in R. For exact details on the inner workings of each script, use the `--help` flag or see the README_supplement in this repository. All paths to softwares are defaulted to those on wheelerlab3, with genotypes available at `/home/angela/Ad_PX_pipe/AMR`, and it is expected that all scripts are run from the same directory.
+This repository reorganizes and restructures scripts from ["Analysis of the genetic architecture and predicted gene expression of lipid traits in Hispanic cohorts"](https://github.com/WheelerLab/px_his_chol) to be more user-friendly. We will be using genotypes from 1000 Genomes American superpopulation and simulating phenotypes and covariances in R. All paths to softwares are defaulted to those on wheelerlab3, with genotypes available at `/home/angela/Ad_PX_pipe/AMR`, and it is expected that all scripts are run from the same directory. For exact details on the inner workings of each script, use the `--help` flag or see the manual.  yYou should be able to copy the genotypes and copy and paste all the commands from this README and everything should run.
+
+For much more detail on the process of everything in here, please see the manual, I spent a lot of time writing it :).
 
 00. Produce phenotypes and covariates (ex. medicines) in R (for test data only)
     * `Rscript 00_simulate_pheno_covar.R --bfile AMR`
