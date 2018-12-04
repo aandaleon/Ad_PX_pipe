@@ -45,7 +45,8 @@ rownames(KINGmat2) <- iids
 fwrite(KINGmat2, "relatedness_wIID.txt", sep = "\t", row.names = T, col.names = T, nThread = 40)
 fwrite(KINGmat2, "relatedness_woIID.txt", sep = "\t", row.names = F, col.names = F, nThread = 40)
 
-#for GCTA b/c they don't like neg. values
+'
+#for GCTA b/c they dont like neg. values
 KINGmat3 <- KINGmat2
 KINGmat3[KINGmat3 < 0] <- 0
 fwrite(KINGmat3, "relatedness_wIID_noNeg.txt", sep = "\t", row.names = T, col.names = T, nThread = 40)
@@ -56,6 +57,7 @@ KINGmat3 <- as.matrix(KINGmat3)
 rownames(KINGmat3) <- iids
 colnames(KINGmat3) <- iids
 write_GRMBin(KINGmat3, prefix = "relatedness")
+'
 print("Completed creating relatedness matrix. Now calculating PCs.")
 
 #calculate PCs
