@@ -56,7 +56,7 @@ For much more detail on the process of everything in here, please see the manual
     * b. Run COLOC wrapper (first argument sample size, second argument GWAS prefix)
       * `bash 10b_run_COLOC.sh 347 AMR_`
 
-11. Perform backward elimination modeling of all significant genes in R
+11. Perform backward elimination modeling of all significant genes to find independent signals in R
     * `Rscript 11_back_elim.R --sig_gene output/AMR_sig_genes.txt --pheno pheno_wIID.txt --pred_exp_prefix AMR_ --pheno_name pheno`
 
 12. Make reference populations for use in local ancestry inference in [PLINK](https://www.cog-genomics.org/plink/1.9/data)
