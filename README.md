@@ -51,9 +51,9 @@ For much more detail on the process of everything in here, please see the manual
         * Again, set P arbitrarily low for example; set to 5e-8 for real analyses
 
 10. Perform colocalization between GWAS results and eQTL data using [COLOC](https://cran.r-project.org/web/packages/coloc/coloc.pdf) in a [COLOC wrapper](https://github.com/hakyimlab/summary-gwas-imputation)
-   * a. Put GWAS and eQTL data into COLOC input format (takes a while depending on number of SNPs in GWAS)
+    * a. Put GWAS and eQTL data into COLOC input format (takes a while depending on number of SNPs in GWAS)
       * `Rscript 10a_make_COLOC_input.R --ma AMR.ma --GWAS_prefix AMR_ --sample_size 347`
-   * b. Run COLOC wrapper (first argument sample size, second argument GWAS prefix)
+    * b. Run COLOC wrapper (first argument sample size, second argument GWAS prefix)
       * `bash 10b_run_COLOC.sh 347 AMR_`
 
 11. Perform backward elimination modeling of all significant genes in R
