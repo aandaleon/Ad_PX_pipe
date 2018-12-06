@@ -27,8 +27,8 @@ GWAS_SNPs <- fread(ma, header = F)
 GWAS_SNPs <- GWAS_SNPs$V1
 
 #GTEx frq
-frq <- fread("/home/angela/px_his_chol/COLOC/GTEx_WHLBLD.frq") #we're just gonna use WHLBLD dosages for everyone
-bim <- fread("/home/angela/px_his_chol/MESA_compare/GTEx_WB/GTEx_WHLBLD.bim") #for adding cpos
+frq <- fread("/home/angela/Ad_PX_pipe_data/GTEx_WHLBLD.frq") #we're just gonna use WHLBLD dosages for everyone
+bim <- fread("/home/angela/Ad_PX_pipe_data/GTEx_WHLBLD.bim") #for adding cpos
 bim$cpos <- paste(bim$V1, bim$V4, sep = "_")
 bim <- bim %>% dplyr::select(V2, cpos)
 colnames(bim) <- c("SNP", "cpos")
@@ -41,7 +41,7 @@ tissues_sample_size <- c(233, 578, 352, 585, 1163, 298, 298, 126, 197, 118, 285,
 
 for(tissue in 1:length(tissues)){ #read in tissue's .frq file for MAF
   if(tissue <= 5){ #if MESA
-    frq <- fread("/home/angela/px_his_chol/MESA_compare/" %&% tissues[tissue] %&% ".frq", nThread = 30)
+    frq <- fread("/home/angela/Ad_PX_pipe_data/MESA_frq/" %&% tissues[tissue] %&% ".frq", nThread = 30)
     frq <- frq %>% dplyr::select(SNP, MAF)
   }else{
     frq <- GTEx_frq
@@ -51,7 +51,7 @@ for(tissue in 1:length(tissues)){ #read in tissue's .frq file for MAF
   GWAS_write <- data.frame(panel_variant_id = character(), effect_size = numeric(), standard_error = numeric(), frequency = numeric(), sample_size = numeric(), stringsAsFactors = F) 
   
   if(tissue > 5){ #GTEx is not separated by chr
-    meqtl <- fread("/home/angela/px_his_chol/COLOC/GTEx_V6_eqtl/GTEx_Analysis_v6p_all-associations/" %&% tissues[tissue] %&% "_Analysis.v6p.all_snpgene_pairs.txt.gz", nThread = 30) #read in matrix eQTL results
+    meqtl <- fread("/home/angela/Ad_PX_pipe_data/GTEx_eQTL/" %&% tissues[tissue] %&% "_Analysis.v6p.all_snpgene_pairs.txt.gz", nThread = 30) #read in matrix eQTL results
 
     #why can't you just be in normal cpos format (force GTEx ids to be in normal cpos)
     meqtl$cpos <- gsub("^([^_]*_[^_]*)_.*$", "\\1", meqtl$variant_id) #https://stackoverflow.com/questions/7449564/regex-return-all-before-the-second-occurrence
