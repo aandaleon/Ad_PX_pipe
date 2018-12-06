@@ -1,10 +1,12 @@
 # Ad_PX_pipe
-This repository reorganizes and restructures scripts from ["Analysis of the genetic architecture and predicted gene expression of lipid traits in Hispanic cohorts"](https://github.com/WheelerLab/px_his_chol) to be more user-friendly. We will be using genotypes from 1000 Genomes American superpopulation and simulating phenotypes and covariances in R. All paths to softwares are defaulted to those on wheelerlab3, with genotypes available at `/home/angela/Ad_PX_pipe/AMR`, and it is expected that all scripts are run from the same directory. For exact details on the inner workings of each script, use the `--help` flag or see the manual.  You should be able to copy the genotypes and copy and paste all the commands from this README and everything should run... but will you understand it?
+This repository reorganizes and restructures scripts from ["Analysis of the genetic architecture and predicted gene expression of lipid traits in Hispanic cohorts"](https://github.com/WheelerLab/px_his_chol) to be more user-friendly. All paths to softwares are defaulted to those on wheelerlab3, with genotypes available at `/home/angela/Ad_PX_pipe/AMR`, and it is expected that all scripts are run from the same directory. For exact details on the inner workings of each script, use the `--help` flag or see the manual. We will be using genotypes from 1000 Genomes American superpopulation and simulating phenotypes and covariances in R. The input population does not need to be admixed, but local ancestry steps (12-15) are for use mainly in admixed (African-American, Hispanic) populations. You should be able to copy the genotypes and copy and paste all the commands from this README and everything should run... but will you understand it?
 
 For much more detail on the process of everything in here, please see the manual, I spent a lot of time writing it :).
 
 00. Produce phenotypes and covariates (ex. medicines) in R (for test data only)
     * `Rscript 00_simulate_pheno_covar.R --bfile AMR`
+
+#For use in all populations:
 
 01. Perform quality control in [PLINK](https://www.cog-genomics.org/plink/1.9/filter) using [gwasqc_pipeline](https://github.com/WheelerLab/gwasqc_pipeline)
     * Test data has already been filtered
@@ -59,7 +61,10 @@ For much more detail on the process of everything in here, please see the manual
 11. Perform backward elimination modeling of all significant genes to find independent signals in R
     * `Rscript 11_back_elim.R --sig_gene output/AMR_sig_genes.txt --pheno pheno_wIID.txt --pred_exp_prefix AMR_ --pheno_name pheno`
 
+#For use in admixed populations:
+
 12. Make reference populations for use in local ancestry inference in [PLINK](https://www.cog-genomics.org/plink/1.9/data)
+    * Note: may just make these ahead of time and have users choose
 
 13. Infer haplotypes with [HAPI-UR](https://code.google.com/archive/p/hapi-ur/)
 
