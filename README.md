@@ -6,7 +6,7 @@ For much more detail on the process of everything in here, please see the manual
 00. Produce phenotypes and covariates (ex. medicines) in R (for test data only)
     * `Rscript 00_simulate_pheno_covar.R --bfile AMR`
 
-#For use in all populations:
+### For use in all populations:
 
 01. Perform quality control in [PLINK](https://www.cog-genomics.org/plink/1.9/filter) using [gwasqc_pipeline](https://github.com/WheelerLab/gwasqc_pipeline)
     * Test data has already been filtered
@@ -61,7 +61,7 @@ For much more detail on the process of everything in here, please see the manual
 11. Perform backward elimination modeling of all significant genes to find independent signals in R
     * `Rscript 11_back_elim.R --sig_gene output/AMR_sig_genes.txt --pheno pheno_wIID.txt --pred_exp_prefix AMR_ --pheno_name pheno`
 
-#For use in admixed populations:
+### For use in admixed populations:
 
 12. Make reference populations for use in local ancestry inference in [PLINK](https://www.cog-genomics.org/plink/1.9/data)
     * Note: may just make these ahead of time and have users choose
