@@ -4,7 +4,7 @@ library(dplyr)
 "%&%" = function(a, b) paste(a, b, sep = "")
 
 parser <- ArgumentParser()
-parser$add_argument("--desc", help = "This script combines the ")
+parser$add_argument("--desc", help = "This script makes covariance file from known covariate and KING PCs.")
 parser$add_argument("--covar", help = "Covariance file (w/o IDs) produced in step 0")
 parser$add_argument("--pcs_file", help = "Principal components file produced in step 2. Default = kingpc.ped", default = "kingpc.ped")
 parser$add_argument("--pcs_num", help = "Number of principal components to include in covariates file. Default = 5.", default = "5")
@@ -25,7 +25,7 @@ output <- "GEMMA_covars.txt"
 
 KING_pcs <- fread(pcs_file_name)
 old_covars <- fread(covar_file_name)
-pcs_to_keep <- KING_pcs[, 7:(6 + 5)]
-new_covars <- cbind(old_covars, pcs_to_keep)
-fwrite(new_covars, output, sep = "\t", row.names = F, col.names = F, na = "NA", quote = F)
+pcs_to_keep <- KING_pcs[, 7:(6 + pcs_num)] #keep specified number of PCs from kingpc.ped
+new_covars <- cbind(old_covars, pcs_to_keep) #make old covariates and pcs into one file
+fwrite(new_covars, output, sep = "\t", row.names = F, col.names = F, na = "NA", quote = F) #write to file for direct GEMMA input
 
