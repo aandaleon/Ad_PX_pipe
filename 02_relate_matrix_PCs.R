@@ -23,16 +23,17 @@ bfile_path <- "AMR_chr22"
 print("Calculating relationship matrix in GEMMA and GCTA format.")
 #run KING --kinship
 KING_kinship <- king_path %&% " -b " %&% bfile_path %&% ".bed --kinship --prefix relatedness"
-system(KING_kinship)
+system(KING_kinship) #run KING through R
 
+#read in IDs from input genotype data; adapted from https://www.rdocumentation.org/packages/GENESIS/versions/2.2.2/topics/pcair
 snpgdsBED2GDS(bed.fn = bfile_path %&% ".bed", bim.fn = bfile_path %&% ".bim", fam.fn = bfile_path %&% ".fam", out.gdsfn = bfile_path %&% ".gds", family = T)
 geno <- GdsGenotypeReader(filename = bfile_path %&% ".gds")
 genoData <- GenotypeData(geno)
-iids <- getScanID(genoData)
+iids <- getScanID(genoData) #pull IDs from genotype data
 
-#if .kin does or doesn't have entries
+#pulls values from KING format to traditional matrix (each row and column is an individual); adapted from https://www.rdocumentation.org/packages/GENESIS/versions/2.2.2/topics/king2mat
 kin <- fread("relatedness.kin", header = T)
-if(nrow(kin) > 0){
+if(nrow(kin) > 0){ #if .kin does or doesn't have entries
   KINGmat <- king2mat(file.kin0 = "relatedness.kin0", file.kin = "relatedness.kin", iids = iids)
 }else{
   KINGmat <- king2mat(file.kin0 = "relatedness.kin0", iids = iids)
@@ -42,9 +43,10 @@ if(nrow(kin) > 0){
 KINGmat2 <- as.data.frame(KINGmat)
 colnames(KINGmat2) <- iids
 rownames(KINGmat2) <- iids
-fwrite(KINGmat2, "relatedness_wIID.txt", sep = "\t", row.names = T, col.names = T, nThread = 40)
-fwrite(KINGmat2, "relatedness_woIID.txt", sep = "\t", row.names = F, col.names = F, nThread = 40)
+fwrite(KINGmat2, "relatedness_wIID.txt", sep = "\t", row.names = T, col.names = T, nThread = 40) #for human readability purposes
+fwrite(KINGmat2, "relatedness_woIID.txt", sep = "\t", row.names = F, col.names = F, nThread = 40) #for GEMMA output
 
+#if you use GCTA for whatever reason later, but leave commented out for now
 '
 #for GCTA b/c they dont like neg. values
 KINGmat3 <- KINGmat2
@@ -60,7 +62,7 @@ write_GRMBin(KINGmat3, prefix = "relatedness")
 '
 print("Completed creating relatedness matrix. Now calculating PCs.")
 
-#calculate PCs
+#calculate PCs using KING
 KING_pca <- king_path %&% " --pca -b " %&% bfile_path %&% ".bed"
 system(KING_pca)
 print("Completed calculating PCs, saved into the files kingpc.dat and kingpc.ped.")
