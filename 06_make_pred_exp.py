@@ -1,4 +1,5 @@
-#runs a loop through all GTEx models and all MESA models
+#runs a loop through all GTEx models and all MESA models to run the --predicted expression flag in PrediXcan
+#if you are using a new verison of GTEx, change the tissues array
 import argparse
 import os
 
@@ -13,8 +14,8 @@ parser.add_argument("--GTEx_suffix", type = str, action = "store", dest = "GTEx_
 parser.add_argument("--output_prefix", type = str, action = "store", dest = "output_prefix", required = False, default = "pred_exp/", help = "Path to prefix PrediXcan predicted expression output. Default = pred_exp/")
 args = parser.parse_args()
 
-pops = ["AFA", "AFHI", "ALL", "CAU", "HIS"]
-tissues = ["Adipose_Subcutaneous", "Adipose_Visceral_Omentum", "Adrenal_Gland", "Artery_Aorta", "Artery_Coronary", "Artery_Tibial", "Brain_Anterior_cingulate_cortex_BA24", "Brain_Caudate_basal_ganglia", "Brain_Cerebellar_Hemisphere", "Brain_Cortex", "Brain_Frontal_Cortex_BA9", "Brain_Hippocampus", "Brain_Hypothalamus", "Brain_Nucleus_accumbens_basal_ganglia", "Brain_Putamen_basal_ganglia", "Breast_Mammary_Tissue", "Cells_EBV-transformed_lymphocytes", "Cells_Transformed_fibroblasts", "Colon_Sigmoid", "Colon_Transverse", "Esophagus_Gastroesophageal_Junction", "Esophagus_Mucosa", "Esophagus_Muscularis", "Heart_Atrial_Appendage", "Heart_Left_Ventricle", "Liver", "Lung", "Muscle_Skeletal", "Nerve_Tibial", "Ovary", "Pancreas", "Pituitary", "Prostate", "Skin_Not_Sun_Exposed_Suprapubic", "Skin_Sun_Exposed_Lower_leg", "Small_Intestine_Terminal_Ileum", "Spleen", "Stomach", "Testis", "Thyroid", "Uterus", "Vagina", "Whole_Blood"]
+pops = ["AFA", "AFHI", "ALL", "CAU", "HIS"] #all of Lauren's MESA models
+tissues = ["Adipose_Subcutaneous", "Adipose_Visceral_Omentum", "Adrenal_Gland", "Artery_Aorta", "Artery_Coronary", "Artery_Tibial", "Brain_Anterior_cingulate_cortex_BA24", "Brain_Caudate_basal_ganglia", "Brain_Cerebellar_Hemisphere", "Brain_Cortex", "Brain_Frontal_Cortex_BA9", "Brain_Hippocampus", "Brain_Hypothalamus", "Brain_Nucleus_accumbens_basal_ganglia", "Brain_Putamen_basal_ganglia", "Breast_Mammary_Tissue", "Cells_EBV-transformed_lymphocytes", "Cells_Transformed_fibroblasts", "Colon_Sigmoid", "Colon_Transverse", "Esophagus_Gastroesophageal_Junction", "Esophagus_Mucosa", "Esophagus_Muscularis", "Heart_Atrial_Appendage", "Heart_Left_Ventricle", "Liver", "Lung", "Muscle_Skeletal", "Nerve_Tibial", "Ovary", "Pancreas", "Pituitary", "Prostate", "Skin_Not_Sun_Exposed_Suprapubic", "Skin_Sun_Exposed_Lower_leg", "Small_Intestine_Terminal_Ileum", "Spleen", "Stomach", "Testis", "Thyroid", "Uterus", "Vagina", "Whole_Blood"] #this is set to GTEx V6 because I am familiar with these. Change as necessary.
 
 PrediXcan_path = args.PrediXcan_path
 dosages_path = args.dosages_path
@@ -25,12 +26,13 @@ GTEx_suffix = args.GTEx_suffix
 output_prefix = args.output_prefix
 
 print("Starting creation of predicted expressions.")
-os.system("mkdir -p " + output_prefix)
-for pop in pops:
+os.system("mkdir -p " + output_prefix) #make output folder if not already made
+for pop in pops: #iterate through GTEx
     PX_command = PrediXcan_path + " --predict --dosages " + dosages_path + " --samples samples.txt --weights " + MESA_prefix + pop + MESA_suffix + " --output_prefix " + output_prefix + pop
     os.system(PX_command)
     print("Completed with " + pop + ".")
-for tissue in tissues:
+for tissue in tissues: #iterate through MESA
     PX_command = PrediXcan_path + " --predict --dosages " + dosages_path + " --samples samples.txt --weights " + GTEx_prefix + tissue + GTEx_suffix + " --output_prefix " + output_prefix + tissue
     os.system(PX_command)
     print("Completed with " + tissue + ".")
+print("Completed with making predicted expressions.")
