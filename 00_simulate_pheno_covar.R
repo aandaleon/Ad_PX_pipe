@@ -11,6 +11,7 @@ args <- parser$parse_args()
 bfile_path <- args$bfile
 #bfile_path <- "AMR"
 
+print("Beginning generation of random phenotype and covariate files.")
 fam <- fread(bfile_path %&% ".fam")
 fam <- fam %>% select(V1, V2) #keep only FID and IID columns
 colnames(fam) <- c("FID", "IID")
@@ -33,3 +34,4 @@ fwrite(covar, "covar_wIID.txt", row.names = F, col.names = T, na = "NA", quote =
 covar$FID <- 1 #GEMMA requires this as an intercept term
 covar$IID <- NULL #GEMMA requires only columns of covariates and doesn't take IDs
 fwrite(covar, "covar_woIID.txt", row.names = F, col.names = F, na = "NA", quote = F, sep = "\t") #for GEMMA purposes, which doesn't like column names
+print("Completed generation of random phenotype and covariate files. Output is in pheno_wIID.txt, pheno_woIID.txt, covar_wIID.txt, and covar_woIID.txt")
