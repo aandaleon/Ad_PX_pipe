@@ -25,8 +25,12 @@ output <- "GEMMA_covars.txt"
 
 KING_pcs <- fread(pcs_file_name)
 old_covars <- fread(covar_file_name)
-pcs_to_keep <- KING_pcs[, 7:(6 + pcs_num)] #keep specified number of PCs from kingpc.ped
-new_covars <- cbind(old_covars, pcs_to_keep) #make old covariates and pcs into one file
+if(pcs_to_keep == 0){
+  new_covars <- old_covars
+}else{
+  pcs_to_keep <- KING_pcs[, 7:(6 + pcs_num)] #keep specified number of PCs from kingpc.ped
+  new_covars <- cbind(old_covars, pcs_to_keep) #make old covariates and pcs into one file
+}
 fwrite(new_covars, output, sep = "\t", row.names = F, col.names = F, na = "NA", quote = F) #write to file for direct GEMMA input
 
 print("Completed making new covariate file.")
