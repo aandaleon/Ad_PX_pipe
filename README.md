@@ -53,7 +53,7 @@ For much more detail on the process of everything in here, please see the manual
 
 10. Perform colocalization between GWAS results and eQTL data using [COLOC](https://cran.r-project.org/web/packages/coloc/coloc.pdf) in a [COLOC wrapper](https://github.com/hakyimlab/summary-gwas-imputation)
     * a. Put GWAS and eQTL data into COLOC input format (takes a while due to size of eQTL files)
-      * `Rscript 10a_make_COLOC_input.R --ma AMR.ma --GWAS_prefix AMR_ --sample_size 347`
+      * `Rscript 10a_make_COLOC_input.R --ma_prefix AMR --GWAS_prefix AMR --sample_size 347 --pheno_names pheno_names.txt`
     * b. Run COLOC wrapper (first argument sample size, second argument GWAS prefix)
       * `bash 10b_run_COLOC.sh 347 AMR_`
 
