@@ -29,8 +29,7 @@ For much more detail on the process of everything in here, please see the manual
     * b. Make covariance file from known covariates and KING PCs
       * `Rscript 05b_make_GEMMA_covars.R --covar covar_woIID.txt --pcs_file kingpc.ped --pcs_num 5 --output GEMMA_covars.txt`
     * c. Run all chrs. in a loop
-      * `bash 05c_GEMMA_loop.sh -g BIMBAM/chr -p pheno_woIID.txt -a anno/anno -k relatedness_woIID.txt -c GEMMA_covars.txt -o AMR_`
-      * Note to self: make easier to iterate through more than one pheno
+      * `python 05c_GEMMA_wrapper.py --relatedness relatedness_woIID.txt --BIMBAM_prefix chr --pheno pheno_woIID.txt --pheno_names pheno_names.txt --covariates GEMMA_covars.txt --anno anno/anno --output AMR_`
 
 06. Calculate predicted gene expressions in [PrediXcan](https://github.com/hakyimlab/PrediXcan) using [GTEx](http://predictdb.org/) and [MESA](https://github.com/aandaleon/DivPop) models
     * `python 06_make_pred_exp.py --dosages_path dosages/ --output_prefix pred_exp/`
