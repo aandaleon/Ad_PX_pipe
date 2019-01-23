@@ -38,7 +38,7 @@ For much more detail on the process of everything in here, please see the manual
     * a. Convert predicted expression to GEMMA-style pseudo-genotypes
       * `python 07a_convert_PrediXcan_to_GEMMA.py --pred_exp_prefix pred_exp/ --output_prefix pred_exp_GEMMA/`
     * b. Run all pops. and tissues in a loop
-      * `bash 05c_GEMMA_loop.sh -g pred_exp_GEMMA/ -p pheno_woIID.txt -a anno/anno -k relatedness_woIID.txt -c GEMMA_covars.txt -o AMR_ -h`    
+      * `python 05c_GEMMA_wrapper.py --relatedness relatedness_woIID.txt --geno_prefix pred_exp_GEMMA/ --pheno pheno_woIID.txt --pheno_names pheno_names.txt --covariates GEMMA_covars.txt --anno anno/anno --output AMR --pred_exp`    
 
 08. Find significant SNPs from GWAS and significant genes from PrediXcan in R
     * `python 08_sig_SNP_sig_gene.py --SNP_sig 5e-4 --gene_sig 0.05 --input_prefix AMR_`
