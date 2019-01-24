@@ -41,7 +41,7 @@ For much more detail on the process of everything in here, please see the manual
       * `python 05c_GEMMA_wrapper.py --relatedness relatedness_woIID.txt --geno_prefix pred_exp_GEMMA/ --pheno pheno_woIID.txt --pheno_names pheno_names.txt --covariates GEMMA_covars.txt --anno anno/anno --output AMR --pred_exp`    
 
 08. Find significant SNPs from GWAS and significant genes from PrediXcan in R
-    * `python 08_sig_SNP_sig_gene.py --SNP_sig 5e-4 --gene_sig 0.05 --input_prefix AMR_`
+    * `python 08_sig_SNP_sig_gene.py --SNP_sig 5e-4 --gene_sig 0.05 --input_prefix AMR`
       * NOTE: I set these thresholds arbitrarilty low so we have significant genes to with with later. Usually, use the defaults, 5e-8 and 9.654e-6, respectively.
 
 09. Calculate independent significant SNPs in a joint analysis in [GCTA-COJO](https://cnsgenomics.com/software/gcta/#COJO)
