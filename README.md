@@ -47,7 +47,7 @@ For much more detail on the process of everything in here, please see the manual
 09. Calculate independent significant SNPs in a joint analysis in [GCTA-COJO](https://cnsgenomics.com/software/gcta/#COJO)
     * a. Make GWAS output into GCTA-COJO format 
       * `python 09a_GEMMA_to_GCTA-COJO.py --fam AMR.fam --GWAS_prefix AMR --output_prefix AMR --pheno_names pheno_names.txt`
-    * b. Run GCTA (this is not a script, this is actual gcta)
+    * b. Run GCTA (this is not a script, this is actual GCTA)
       * `gcta64 --cojo-file AMR_pheno1.ma --cojo-slct --cojo-p 5e-4 --bfile AMR --cojo-actual-geno --out AMR_pheno1; gcta64 --cojo-file AMR_pheno2.ma --cojo-slct --cojo-p 5e-4 --bfile AMR --cojo-actual-geno --out AMR_pheno2`
         * Again, set P arbitrarily low for example; set to 5e-8 for real analyses
 
