@@ -1,5 +1,4 @@
 #the structure of this is weird b/c GTEx eQTL data is not separated by chr while MESA is
-  #I found MESA combined data but already wrote this whoops
 library(argparse)
 library(data.table)
 library(dplyr)
@@ -26,6 +25,7 @@ pheno_names <- "pheno_names.txt"
 sample_size <- "347"
 '
 
+print("You're gonna want to leave this running overnight.")
 pheno_names <- fread(pheno_names, header = F)$V1
 system("mkdir -p COLOC_input/")
 
@@ -105,7 +105,7 @@ for(tissue in 1:length(tissues)){ #read in tissue's .frq file for MAF
     gzip("COLOC_input/" %&% GWAS_prefix %&% "_" %&% pheno_name %&% "_eQTL_" %&% tissues[tissue] %&% ".txt", destname = "COLOC_input/" %&% GWAS_prefix %&% "_" %&% pheno_name %&% "_eQTL_" %&% tissues[tissue] %&% ".txt.gz", overwrite = T) #script may only take .gz values so can't hurt to be too careful
     fwrite(GWAS_write, "COLOC_input/" %&% GWAS_prefix %&% "_" %&% pheno_name %&% "_GWAS_" %&% tissues[tissue] %&% ".txt", row.names = F, col.names = T, sep = "\t", quote = F, na = "NA")
     gzip("COLOC_input/" %&% GWAS_prefix %&% "_" %&% pheno_name %&% "_GWAS_" %&% tissues[tissue] %&% ".txt", "COLOC_input/" %&% GWAS_prefix %&% "_" %&% pheno_name %&% "_GWAS_" %&% tissues[tissue] %&% ".txt.gz", overwrite = T)
-    print("Completed with " %&% tissues[tissue] %&% " for " %&% pheno_name %&%".")
+    print("Completed with " %&% tissues[tissue] %&% ", for " %&% pheno_name %&%".")
   }
 }
 print("Completed making input for COLOC.")
