@@ -105,7 +105,7 @@ for(tissue in 1:length(tissues)){ #read in tissue's .frq file for MAF
     gzip("COLOC_input/" %&% GWAS_prefix %&% "_" %&% pheno_name %&% "_eQTL_" %&% tissues[tissue] %&% ".txt", destname = "COLOC_input/" %&% GWAS_prefix %&% "_" %&% pheno_name %&% "_eQTL_" %&% tissues[tissue] %&% ".txt.gz", overwrite = T) #script may only take .gz values so can't hurt to be too careful
     fwrite(GWAS_write, "COLOC_input/" %&% GWAS_prefix %&% "_" %&% pheno_name %&% "_GWAS_" %&% tissues[tissue] %&% ".txt", row.names = F, col.names = T, sep = "\t", quote = F, na = "NA")
     gzip("COLOC_input/" %&% GWAS_prefix %&% "_" %&% pheno_name %&% "_GWAS_" %&% tissues[tissue] %&% ".txt", "COLOC_input/" %&% GWAS_prefix %&% "_" %&% pheno_name %&% "_GWAS_" %&% tissues[tissue] %&% ".txt.gz", overwrite = T)
-    print("Completed with " %&% tissues[tissue] %&% ", for " %&% pheno_name %&%".")
+    print("Completed with " %&% tissues[tissue] %&% " for " %&% pheno_name %&%".")
   }
 }
 print("Completed making input for COLOC.")
