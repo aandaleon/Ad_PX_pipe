@@ -58,7 +58,7 @@ For much more detail on the process of everything in here, please see the manual
       * `python 10b_COLOC_wrapper.py --prefix AMR --GWAS_sample_size 347 --pheno_names pheno_names.txt`
 
 11. Perform backward elimination modeling of all significant genes to find independent signals in R
-    * `Rscript 11_back_elim.R --sig_gene output/AMR_sig_genes.txt --pheno pheno_wIID.txt --pred_exp_prefix AMR_ --pheno_name pheno`
+    * `Rscript 11_back_elim.R --sig_gene output/AMR_sig_genes.txt --pheno pheno_wIID.txt --pheno_name pheno1`
 
 ### For use in admixed populations:
 
