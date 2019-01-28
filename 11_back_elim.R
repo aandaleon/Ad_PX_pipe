@@ -11,7 +11,7 @@ parser <- ArgumentParser()
 parser$add_argument("--desc", help = "Perform a colocalization between GWAS results and eQTL data. This uses GTEx V6, so if you want V7, download those data and change paths accordingly.")
 parser$add_argument("--sig_gene", help = "Path to significant gene file")
 parser$add_argument("--pheno", help = "Path to phenotype file w/ IDs")
-parser$add_argument("--pred_exp_prefix", help = "Prefix of PrediXcan-GEMMA results")
+#parser$add_argument("--pred_exp_prefix", help = "Prefix of PrediXcan-GEMMA results")
 parser$add_argument("--pheno_name", help = "Name of pheno to test")
 args <- parser$parse_args()#c("--sig_gene", "/home/angela/Ad_PX_pipe/output/AMR_sig_genes.txt", "--pheno", "/home/angela/Ad_PX_pipe/pheno_wIID.txt", "--pred_exp_prefix", "AMR_", "--pheno_name", "pheno1"))
 
@@ -40,12 +40,11 @@ for(tiss_index in 1:length(tissues)){
   
   #convert current gene IDs to tissue specific gene names
   genes_in_pred_exp <- as.data.frame(colnames(tiss)[2:length(colnames(tiss))])
-  genes_in_pred_exp <- genes_in_pred_exp[!duplicated(as.list(genes_in_pred_exp))] #remove non-unique columns
   colnames(genes_in_pred_exp) <- "gene"
   genes_in_pred_exp <- left_join(genes_in_pred_exp, BP_Chrome, by = "gene") 
   tissues_cleaned <- gsub("-", "_", tissues[tiss_index]) #dashes create weird downstream issues
   genes_in_pred_exp$gene_name <- paste(tissues_cleaned, genes_in_pred_exp$gene_name, sep = "_")
-  genes_in_pred_exp <- rbind.data.frame(c("IID","IID"), genes_in_pred_exp) %>% select(gene, gene_name)
+  genes_in_pred_exp <- rbind.data.frame(c("IID","IID"), genes_in_pred_exp) %>% dplyr::select(gene, gene_name)
   
   #remove all the genes without names ex:tissue_NA
   genes_in_pred_exp <- subset(genes_in_pred_exp, gene_name != tissues[tiss_index] %&% "_NA")
@@ -53,7 +52,8 @@ for(tiss_index in 1:length(tissues)){
   #select genes with tissue specific names
   tiss_gene_in_tiss <- genes_in_pred_exp[genes_in_pred_exp$gene_name %in% gene_tiss_combos,]
   for_back_elim <- tiss %>% dplyr::select(tiss_gene_in_tiss$gene) 
-  colnames(for_back_elim)<-tiss_gene_in_tiss$gene_name
+  colnames(for_back_elim) <- tiss_gene_in_tiss$gene_name
+  for_back_elim <- for_back_elim %>% setNames(make.names(names(.), unique = TRUE)) #https://stackoverflow.com/questions/43893955/dplyr-mutate-solve-unique-names-error
   back_elim <- left_join(back_elim, for_back_elim, by = "IID") #add to list to back-elim
 }
 
@@ -81,13 +81,14 @@ for(chr in 1:nrow(gene_clusters)){
   back_elim_cluster <- back_elim %>% dplyr::select(tiss_gene_to_keep)
   back_elim_cluster <- back_elim_cluster[complete.cases(back_elim_cluster),]
   back_elim_cluster <- inner_join(pheno,back_elim_cluster, by = "IID") %>% dplyr::select(-IID,-FID)
-
+  
   predictor_genes <- colnames(back_elim_cluster)[2:length(colnames(back_elim_cluster))] #https://stackoverflow.com/questions/5251507/how-to-succinctly-write-a-formula-with-many-variables-from-a-data-frame
-  fmla <- paste(args$pheno_name," ~ ", paste(predictor_genes, collapse= "+"))
+  fmla <- paste(args$pheno_name," ~ ", paste(predictor_genes, collapse = "+"))
+  #fmla <- paste(pheno_name," ~ ", paste(predictor_genes, collapse = "+"))
   fmla <- as.formula(fmla)
   
   #run full model
-  all_tiss_gene <- lm(fmla, data = back_elim_cluster) 
+  all_tiss_gene <- lm(fmla, data = back_elim_cluster, na.action = na.omit) 
   all_tiss_gene_info <- data.frame(summary(all_tiss_gene)[4])
   colnames(all_tiss_gene_info) <- c("Estimate", "SE", "T", "P")
   all_tiss_gene_info$chr <- chr_num
@@ -95,14 +96,19 @@ for(chr in 1:nrow(gene_clusters)){
   all_tiss_gene_results <- rbind(all_tiss_gene_results, all_tiss_gene_info)
   print("Finished making full model for " %&% chr_num %&% ".")
   
-  #using stepAIC, is there a better option somewhere?
-  back_elim_complete <- stepAIC(all_tiss_gene, direction = "backward", trace = FALSE) #perform backward analysis on full model
-  back_elim_complete_info <- data.frame(summary(back_elim_complete)[4])
-  colnames(back_elim_complete_info) <- c("Estimate", "SE", "T", "P")
-  back_elim_complete_info$chr <- chr_num
-  back_elim_complete_info$tiss_gene <- rownames(back_elim_complete_info)
-  back_elim_results <- rbind(back_elim_results, back_elim_complete_info)
-  print("Finished making backward-eliminated model for " %&% chr_num %&% ".")
+  if(sum(as.vector(summary(all_tiss_gene)[3])$residuals) != 0){ #if full model isn't empty
+    #using step, is there a better option somewhere?
+    all_tiss_gene <- na.omit(all_tiss_gene)
+    back_elim_complete <- step(all_tiss_gene, direction = "backward", trace = FALSE, na.action = na.omit) #perform backward analysis on full model
+    back_elim_complete_info <- data.frame(summary(back_elim_complete)[4])
+    colnames(back_elim_complete_info) <- c("Estimate", "SE", "T", "P")
+    back_elim_complete_info$chr <- chr_num
+    back_elim_complete_info$tiss_gene <- rownames(back_elim_complete_info)
+    back_elim_results <- rbind(back_elim_results, back_elim_complete_info)
+    print("Finished making backward-eliminated model for " %&% chr_num %&% ".")
+  }else{
+    print("No backward-eliminated model made for " %&% chr_num %&% ".")
+  }
 }
 
 gene_genename <- sig_gene %>% dplyr::select(rs, gene_name)
@@ -114,5 +120,5 @@ colnames(back_elim_results)[3] <- "gene_name"
 back_elim_results <- left_join(back_elim_results, BP_Chrome, by = "gene_name")
 back_elim_results <- back_elim_results[order(back_elim_results$CHR, back_elim_results$BP, back_elim_results$gene_name),]
 back_elim_results <- back_elim_results %>% dplyr::select(chr, BP, gene_name, tiss, P)
-fwrite(back_elim_results, "back_elim_results.csv", row.names = F, col.names = T, sep = ",", quote = F, na = NA)
-print("Results are in back_elim_results.csv")
+fwrite(back_elim_results, args$pheno_name %&% "_back_elim_results.csv", row.names = F, col.names = T, sep = ",", quote = F, na = NA)
+print("Results are in " %&% args$pheno_name %&%" back_elim_results.csv")
