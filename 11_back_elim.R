@@ -121,4 +121,4 @@ back_elim_results <- left_join(back_elim_results, BP_Chrome, by = "gene_name")
 back_elim_results <- back_elim_results[order(back_elim_results$CHR, back_elim_results$BP, back_elim_results$gene_name),]
 back_elim_results <- back_elim_results %>% dplyr::select(chr, BP, gene_name, tiss, P)
 fwrite(back_elim_results, args$pheno_name %&% "_back_elim_results.csv", row.names = F, col.names = T, sep = ",", quote = F, na = NA)
-print("Results are in " %&% args$pheno_name %&%" back_elim_results.csv")
+print("Results are in " %&% args$pheno_name %&%"_back_elim_results.csv")
