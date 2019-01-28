@@ -40,6 +40,7 @@ for(tiss_index in 1:length(tissues)){
   
   #convert current gene IDs to tissue specific gene names
   genes_in_pred_exp <- as.data.frame(colnames(tiss)[2:length(colnames(tiss))])
+  genes_in_pred_exp <- genes_in_pred_exp[!duplicated(as.list(genes_in_pred_exp))] #remove non-unique columns
   colnames(genes_in_pred_exp) <- "gene"
   genes_in_pred_exp <- left_join(genes_in_pred_exp, BP_Chrome, by = "gene") 
   tissues_cleaned <- gsub("-", "_", tissues[tiss_index]) #dashes create weird downstream issues
