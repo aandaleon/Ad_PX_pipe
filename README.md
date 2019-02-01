@@ -62,13 +62,11 @@ For much more detail on the process of everything in here, please see the manual
 
 ### For use in admixed populations:
 
-12. Make reference populations for use in local ancestry inference in [PLINK](https://www.cog-genomics.org/plink/1.9/data)
-    * Note: may just make these ahead of time and have users choose
+12. Merge sample population with reference populations [PLINK](https://www.cog-genomics.org/plink/1.9/data)
 
-13. Infer haplotypes with [HAPI-UR](https://code.google.com/archive/p/hapi-ur/)
+13. Phase haplotypes with [HAPI-UR](https://code.google.com/archive/p/hapi-ur/)
 
 14. Calculate local ancestry inference in [RFMix](https://sites.google.com/site/rfmixlocalancestryinference/)
-
+    
 15. Perform admixture mapping in [GEMMA](http://www.xzlab.org/software/GEMMAmanual.pdf)
-
 
