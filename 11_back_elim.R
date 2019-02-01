@@ -15,13 +15,23 @@ parser$add_argument("--pheno", help = "Path to phenotype file w/ IDs")
 parser$add_argument("--pheno_name", help = "Name of pheno to test")
 args <- parser$parse_args()#c("--sig_gene", "/home/angela/Ad_PX_pipe/output/AMR_sig_genes.txt", "--pheno", "/home/angela/Ad_PX_pipe/pheno_wIID.txt", "--pred_exp_prefix", "AMR_", "--pheno_name", "pheno1"))
 
+pheno <- args$pheno
+sig_gene <- args$sig_gene
+pheno_name <- args$pheno_name
+
+'
+pheno <- "pheno_wIID.txt"
+sig_gene <- "output/AMR_sig_genes.txt"
+pheno_name <- "pheno1"
+'
+
 #load in the phenotype data
-pheno <- fread(args$pheno, header = T) #for doing multiple phenos split here
-pheno <- pheno %>% dplyr::select(FID, IID, args$pheno_name)
+pheno <- fread(pheno, header = T) #for doing multiple phenos split here
+pheno <- pheno %>% dplyr::select(FID, IID, pheno_name)
 back_elim <- pheno[, 2] #extract only IID
 
 #prep data - load significant genes as well as extra gene data from BP_chrom
-sig_gene <- fread(args$sig_gene, header = T)
+sig_gene <- fread(sig_gene, header = T)
 BP_Chrome <- read.table("/home/angela/Ad_PX_pipe_data/BP_Chrome.txt", header = T, stringsAsFactors = F)
 sig_gene <- left_join(sig_gene, BP_Chrome, by = c("rs" = "gene"))
 gene_tiss_combos <- paste(sig_gene$tissue, sig_gene$gene_name, sep = "_") #create a list of tissue-gene IDs
@@ -83,8 +93,7 @@ for(chr in 1:nrow(gene_clusters)){
   back_elim_cluster <- inner_join(pheno,back_elim_cluster, by = "IID") %>% dplyr::select(-IID,-FID)
   
   predictor_genes <- colnames(back_elim_cluster)[2:length(colnames(back_elim_cluster))] #https://stackoverflow.com/questions/5251507/how-to-succinctly-write-a-formula-with-many-variables-from-a-data-frame
-  fmla <- paste(args$pheno_name," ~ ", paste(predictor_genes, collapse = "+"))
-  #fmla <- paste(pheno_name," ~ ", paste(predictor_genes, collapse = "+"))
+  fmla <- paste(pheno_name," ~ ", paste(predictor_genes, collapse = "+"))
   fmla <- as.formula(fmla)
   
   #run full model
@@ -120,5 +129,5 @@ colnames(back_elim_results)[3] <- "gene_name"
 back_elim_results <- left_join(back_elim_results, BP_Chrome, by = "gene_name")
 back_elim_results <- back_elim_results[order(back_elim_results$CHR, back_elim_results$BP, back_elim_results$gene_name),]
 back_elim_results <- back_elim_results %>% dplyr::select(chr, BP, gene_name, tiss, P)
-fwrite(back_elim_results, args$pheno_name %&% "_back_elim_results.csv", row.names = F, col.names = T, sep = ",", quote = F, na = NA)
-print("Results are in " %&% args$pheno_name %&%"_back_elim_results.csv")
+fwrite(back_elim_results, pheno_name %&% "_back_elim_results.csv", row.names = F, col.names = T, sep = ",", quote = F, na = NA)
+print("Results are in " %&% pheno_name %&%"_back_elim_results.csv")
