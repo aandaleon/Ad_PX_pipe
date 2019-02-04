@@ -65,8 +65,8 @@ For much more detail on the process of everything in here, please see the manual
 12. Prepare genotype data with [PLINK](https://www.cog-genomics.org/plink/1.9/data)
     * a. Merge genotypes with a reference populations (options are African-American (AFA) and Hispanic (HIS)), restrict to only SNPs in the study population
       * `plink --bfile AMR --bmerge /home/angela/Ad_PX_pipe_data/RFMix/RefPop/HIS --make-bed --out AMR_w_ref --extract AMR.bim; plink --bfile AMR --exclude AMR_w_ref-merge.missnp --make-bed --out AMR_for_merge; plink --bfile /home/angela/Ad_PX_pipe_data/RFMix/RefPop/HIS --exclude AMR_w_ref-merge.missnp --make-bed --out HIS_for_merge --extract AMR.bim; plink --bfile AMR_for_merge --bmerge HIS_for_merge --make-bed --out AMR_w_ref --allow-no-sex`
-    * b. Order genotype file by population
-      * `cat HIS_for_merge.fam AMR_for_merge.fam > merged.fam;  plink --bfile AMR_w_ref --indiv-sort file merged.fam --make-bed --out AMR_w_ref_ordered`
+    * b. Order genotype file by population and add cM positions
+      * `cat HIS_for_merge.fam AMR_for_merge.fam > merged.fam; plink --bfile AMR_w_ref --indiv-sort file merged.fam  --cm-map /home/angela/Ad_PX_pipe_data/cm_map/genetic_map_chr@_combined_b37.txt --make-bed --out AMR_w_ref_ordered`
     * c. Split input by chr
       * `mkdir -p merged_w_ref/; for i in {1..22}; do plink --bfile AMR_w_ref_ordered --chr ${i} --make-bed --out merged_w_ref/chr${i}; done`
 
