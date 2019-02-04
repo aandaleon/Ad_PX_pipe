@@ -74,8 +74,10 @@ For much more detail on the process of everything in here, please see the manual
    * `mkdir -p haplotypes/; for i in {1..22}; do /home/angela/Ad_PX_pipe_data/HAPI-UR/hapi-ur -p merged_w_ref/chr${i} -w 64 -o haplotypes/chr${i}; done`
 
 14. Calculate local ancestry inference in [RFMix](https://sites.google.com/site/rfmixlocalancestryinference/)
-   * a. Make additional files for RFMix input
-   
+   * a. Make additional files for RFMix input. When making classes, choose a reference population (options are African-American (AFA) and Hispanic (HIS)).
+      * `for i in {1..22}; do awk '{print $3}' haplotypes/chr${i}.phsnp > haplotypes/chr${i}.snp_locations; done; Rscript 14a_make_classes.R haplotypes/chr22.phind HIS AMR`
+      * Note: the sample data is rather small, so some chromosomes may not output
+   * b. Run RFMix
     
 15. Perform admixture mapping in [GEMMA](http://www.xzlab.org/software/GEMMAmanual.pdf)
 
