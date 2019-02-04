@@ -70,7 +70,7 @@ For much more detail on the process of everything in here, please see the manual
     * c. Split input by chr
       * `mkdir -p merged_w_ref/; for i in {1..22}; do plink --bfile AMR_w_ref_ordered --chr ${i} --make-bed --out merged_w_ref/chr${i}; done`
 
-13. Phase haplotypes with [HAPI-UR](https://code.google.com/archive/p/hapi-ur/)
+13. Phase haplotypes with [HAPI-UR](https://code.google.com/archive/p/hapi-ur/). Change value of `-w` depending on parameters described in the [manual](https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/hapi-ur/hapi-ur-manual-09_27_2012.pdf)
    * `mkdir -p haplotypes/; for i in {1..22}; do /home/angela/Ad_PX_pipe_data/HAPI-UR/hapi-ur -p merged_w_ref/chr${i} -w 64 -o haplotypes/chr${i}; done`
 
 14. Calculate local ancestry inference in [RFMix](https://sites.google.com/site/rfmixlocalancestryinference/)
