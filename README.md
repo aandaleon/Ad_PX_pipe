@@ -77,8 +77,8 @@ For much more detail on the process of everything in here, please see the manual
     * a. Make additional files for RFMix input. When making classes, choose a reference population (options are African-American (AFA) and Hispanic (HIS)).
       * `for i in {1..22}; do awk '{print $3}' haplotypes/chr${i}.phsnp > haplotypes/chr${i}.snp_locations; done; Rscript 14a_make_classes.R haplotypes/chr22.phind HIS AMR`
       * Note: the sample data is rather small, so some chromosomes may not output
-    * b. Run RFMix to estimate local ancestry for all individuals (will take a long time)
-      * `mkdir -p RFMix/; cd /home/angela/Ad_PX_pipe_data/RFMix/; for i in {1..22}; do python RunRFMix.py -e 2 -w 0.2 --num-threads 10 --use-reference-panels-in-EM --forward-backward  PopPhased /home/angela/Ad_PX_pipe/haplotypes/chr${i}.phgeno /home/angela/Ad_PX_pipe/AMR.classes  /home/angela/Ad_PX_pipe/haplotypes/chr${i}.snp_locations -o /home/angela/Ad_PX_pipe/RFMix/chr${i}.rfmix; done`
+    * b. Run RFMix to estimate local ancestry for all individuals. This process takes a very long time, so we will only run chr. 22 for this example. Push chrs. to multiple cores when running real data.
+      * `mkdir -p RFMix/; cd /home/angela/Ad_PX_pipe_data/RFMix/; python RunRFMix.py -e 2 -w 0.2 --num-threads 10 --use-reference-panels-in-EM --forward-backward  PopPhased /home/angela/Ad_PX_pipe/haplotypes/chrww.phgeno /home/angela/Ad_PX_pipe/AMR.classes  /home/angela/Ad_PX_pipe/haplotypes/chr22.snp_locations -o /home/angela/Ad_PX_pipe/RFMix/chr22.rfmix`
     
 15. Perform admixture mapping in [GEMMA](http://www.xzlab.org/software/GEMMAmanual.pdf)
 
