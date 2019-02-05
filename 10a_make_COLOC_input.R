@@ -1,4 +1,6 @@
+#converts GEMMA-style GWAS results and standard eQTL format to that suitable for COLOC
 #the structure of this is weird b/c GTEx eQTL data is not separated by chr while MESA is
+#by Angela Andaleon (aandaleon@luc.edu)
 library(argparse)
 library(data.table)
 library(dplyr)

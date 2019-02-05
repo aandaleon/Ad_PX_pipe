@@ -47,7 +47,7 @@ For much more detail on the process of everything in here, please see the manual
 09. Calculate independent significant SNPs in a joint analysis in [GCTA-COJO](https://cnsgenomics.com/software/gcta/#COJO)
     * a. Make GWAS output into GCTA-COJO format 
       * `python 09a_GEMMA_to_GCTA-COJO.py --fam AMR.fam --GWAS_prefix AMR --output_prefix AMR --pheno_names pheno_names.txt`
-    * b. Run GCTA (this is not a script, this is actual GCTA)
+    * b. Run GCTA (see [manual](https://cnsgenomics.com/software/gcta/#COJO))
       * `gcta64 --cojo-file AMR_pheno1.ma --cojo-slct --cojo-p 5e-4 --bfile AMR --cojo-actual-geno --out AMR_pheno1; gcta64 --cojo-file AMR_pheno2.ma --cojo-slct --cojo-p 5e-4 --bfile AMR --cojo-actual-geno --out AMR_pheno2`
         * Again, set P arbitrarily low for example; set to 5e-8 for real analyses
 
@@ -71,11 +71,15 @@ For much more detail on the process of everything in here, please see the manual
       * `mkdir -p merged_w_ref/; for i in {1..22}; do plink --bfile AMR_w_ref_ordered --chr ${i} --make-bed --out merged_w_ref/chr${i}; done`
 
 13. Phase haplotypes with [HAPI-UR](https://code.google.com/archive/p/hapi-ur/). Change value of `-w` depending on parameters described in the [manual](https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/hapi-ur/hapi-ur-manual-09_27_2012.pdf)
-   * `mkdir -p haplotypes/; for i in {1..22}; do /home/angela/Ad_PX_pipe_data/HAPI-UR/hapi-ur -p merged_w_ref/chr${i} -w 64 -o haplotypes/chr${i}; done`
+    * `mkdir -p haplotypes/; for i in {1..22}; do /home/angela/Ad_PX_pipe_data/HAPI-UR/hapi-ur -p merged_w_ref/chr${i} -w 64 -o haplotypes/chr${i}; done`
 
 14. Calculate local ancestry inference in [RFMix](https://sites.google.com/site/rfmixlocalancestryinference/)
-   * a. Make additional files for RFMix input
-   
+    * a. Make additional files for RFMix input. When making classes, choose a reference population (options are African-American (AFA) and Hispanic (HIS)).
+      * `for i in {1..22}; do awk '{print $3}' haplotypes/chr${i}.phsnp > haplotypes/chr${i}.snp_locations; done; Rscript 14a_make_classes.R haplotypes/chr22.phind HIS AMR`
+      * Note: the sample data is rather small, so some chromosomes may not output
+    * b. Run RFMix to estimate local ancestry for all individuals. This process takes a very long time, so we will only run chr. 22 for this example. Push chrs. to multiple cores when running real data.
+      * `mkdir -p RFMix/; cd /home/angela/Ad_PX_pipe_data/RFMix/; python RunRFMix.py -e 2 -w 0.2 --num-threads 10 --use-reference-panels-in-EM --forward-backward  PopPhased /home/angela/Ad_PX_pipe/haplotypes/chr22.phgeno /home/angela/Ad_PX_pipe/AMR.classes  /home/angela/Ad_PX_pipe/haplotypes/chr22.snp_locations -o /home/angela/Ad_PX_pipe/RFMix/chr22.rfmix`
     
 15. Perform admixture mapping in [GEMMA](http://www.xzlab.org/software/GEMMAmanual.pdf)
-
+    * a. Convert RFMix output into an intermediate for GEMMA input downstream
+      * `python 15a_RFMix_to_BIMBAM.py --Viterbi RFMix/chr22.rfmix.2.Viterbi.txt --phind haplotypes/chr22.phind --fam AMR.fam --phsnp haplotypes/chr22.phsnp --output_prefix chr22`

@@ -1,4 +1,5 @@
 #runs a GWAS loop around given phenotypes; all input except for genotypes must be already in GEMMA format
+#by Angela Andaleon (aandaleon@luc.edu)
 import argparse
 import numpy as np
 import pandas as pd

@@ -1,9 +1,10 @@
 #makes .classes file for RFMix from HAPI-UR
+#by Angela Andaleon (aandaleon@luc.edu)
 "%&%" = function(a,b) paste(a,b,sep="")
 library(dplyr)
 library(data.table)
 args <- commandArgs(trailingOnly = T)
-phind_file_name <- args[1] #name of .phind file that HAPI-UR outputted
+phind_file_name <- args[1] #name of .phind file that HAPI-UR output
 pop_file_name <- args[2] #name of pop file with three columns: FID, IID, and pop
 test_pop <- args[3] #code of population to be tested
 

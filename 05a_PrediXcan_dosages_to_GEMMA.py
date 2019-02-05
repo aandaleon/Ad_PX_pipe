@@ -1,4 +1,5 @@
 #Takes information from PrediXcan-style dosages to make SNP annotation and BIMBAM files for GEMMA
+#by Angela Andaleon (aandaleon@luc.edu)
 import argparse
 import gzip
 import pandas as pd
