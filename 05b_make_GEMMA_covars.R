@@ -1,10 +1,12 @@
+#Makes a new covariance file for GEMMA based on known covariates and KING PCs.
+#by Angela Andaleon (aandaleon@luc.edu)
 library(argparse)
 library(data.table)
 library(dplyr)
 "%&%" = function(a, b) paste(a, b, sep = "")
 
 parser <- ArgumentParser()
-parser$add_argument("--desc", help = "This script makes covariance file from known covariate and KING PCs.")
+parser$add_argument("--desc", help = "This script makes covariance file from known covariates and KING PCs.")
 parser$add_argument("--covar", help = "Covariance file (w/o IDs) produced in step 0")
 parser$add_argument("--pcs_file", help = "Principal components file produced in step 2. Default = kingpc.ped", default = "kingpc.ped")
 parser$add_argument("--pcs_num", help = "Number of principal components to include in covariates file. Default = 5.", default = "5")
