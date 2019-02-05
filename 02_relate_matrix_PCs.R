@@ -1,3 +1,5 @@
+#Takes in the path to your PLINK-format genotype files and calculates principal components and a relationship matrix for use in GEMMA. You can calculate these with a subset of SNPs (ex. chr22) for speed.
+#by Angela Andaleon (aandaleon@luc.edu)
 library(argparse)
 library(data.table)
 library(GENESIS)
@@ -7,7 +9,7 @@ library(OmicKriging)
 "%&%" = function(a, b) paste(a, b, sep = "")
 
 parser <- ArgumentParser()
-parser$add_argument("--desc", help = "This script takes in the path to your PLINK-format genotype files and calculates  principal components and a relationship matrix for use in GEMMA. You can calculate these with a subset of SNPs (ex. chr22) for speed.")
+parser$add_argument("--desc", help = "This script takes in the path to your PLINK-format genotype files and calculates principal components and a relationship matrix for use in GEMMA. You can calculate these with a subset of SNPs (ex. chr22) for speed.")
 parser$add_argument("--king", help = "Path to KING executable. Default = /home/angela/Ad_PX_pipe_data/king-offline", default = "/home/angela/px_his_chol/KING_LAPACK/king-offline")
 parser$add_argument("--bfile", help = "PLINK-format genotypes")
 args <- parser$parse_args()
