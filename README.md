@@ -81,4 +81,5 @@ For much more detail on the process of everything in here, please see the manual
       * `mkdir -p RFMix/; cd /home/angela/Ad_PX_pipe_data/RFMix/; python RunRFMix.py -e 2 -w 0.2 --num-threads 10 --use-reference-panels-in-EM --forward-backward  PopPhased /home/angela/Ad_PX_pipe/haplotypes/chr22.phgeno /home/angela/Ad_PX_pipe/AMR.classes  /home/angela/Ad_PX_pipe/haplotypes/chr22.snp_locations -o /home/angela/Ad_PX_pipe/RFMix/chr22.rfmix`
     
 15. Perform admixture mapping in [GEMMA](http://www.xzlab.org/software/GEMMAmanual.pdf)
-
+    * a. Convert RFMix output into an intermediate for GEMMA input downstream
+      * `python 15a_RFMix_to_BIMBAM.py --Viterbi RFMix/chr22.rfmix.2.Viterbi.txt --phind haplotypes/chr22.phind --fam AMR.fam --phsnp haplotypes/chr22.phsnp --output_prefix chr22`
