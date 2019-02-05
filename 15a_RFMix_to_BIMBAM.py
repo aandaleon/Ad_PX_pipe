@@ -42,7 +42,6 @@ output_prefix = "chr2"
 
 #make some folders
 os.system("mkdir -p loc_anc_input/")
-os.system("cd loc_anc_input/")
 
 #restrict data to just admixed inds
 n_ind = len(fam) * 2
@@ -65,16 +64,16 @@ ind_list = []
 for hap in haps:
     ind_list.append(hap[:-2])
 ind_list = sorted(set(ind_list), key = ind_list.index) #remove duplicates but preserve order
-ind_file = open(output_prefix + "_ind.txt", "w") #to be used in subsetting GEMMA input
+ind_file = open("loc_anc_input/" + output_prefix + "_ind.txt", "w") #to be used in subsetting GEMMA input
 ind_file.write("\n".join(ind_list))
 ind_file.close()
 
 print("Starting to make dosage file.")
-anc_dosage_write = open(output_prefix + ".csv", "a+")
+anc_dosage_write = open("loc_anc_input/" + output_prefix + ".csv", "a+")
 anc_dosage_write.write("IID," + ",".join(SNPs) + "\n")
 progress_landmarks_ind = np.linspace(0, len(ind_list), 21, dtype = int).tolist()
 num_ind = 0
-SNP_file = open(output_prefix + "_SNPs.txt", "w") #to be used in subsetting GEMMA input
+SNP_file = open("loc_anc_input/" + output_prefix + "_SNPs.txt", "w") #to be used in subsetting GEMMA input
 SNP_file.write("\n".join(SNPs))
 SNP_file.close()
 
@@ -109,14 +108,14 @@ for ind in ind_list:
                 anc_dosage.append([ind_anc_row[0], "NA\tNA\tNA"]) #who knows
     else: #AFA
         anc_dosage = []
-        for ind_anc_row in ind_anc.itertuples(): 
+        for ind_anc_row in ind_anc.itertuples(): #translate from RFMix codes to ancestry dosages
             if ind_anc_row[1] == 1 and ind_anc_row[2] == 1:
                 anc_dosage.append([ind_anc_row[0], "2.0\t0.0"]) #both CEU
             elif ind_anc_row[1] == 2 and ind_anc_row[2] == 2:
                 anc_dosage.append([ind_anc_row[0], "0.0\t2.0"]) #both YRI
             elif (ind_anc_row[1] == 1 and ind_anc_row[2] == 2) or (ind_anc_row[1] == 2 and ind_anc_row[2] == 1):
                 anc_dosage.append([ind_anc_row[0], "1.0\t1.0"]) #one CEU, one YRI
-                anc_dosage.append([ind_anc_row[0], "NA\tNA"]) 
+                anc_dosage.append([ind_anc_row[0], "NA\tNA"]) #who knows
     anc_dosage_df = pd.DataFrame(anc_dosage)
     anc_dosage_df.columns = ["rs", ind]
     anc_dosage_df = anc_dosage_df.drop_duplicates()
@@ -135,7 +134,6 @@ for ind in ind_list:
       progress = progress_landmarks_ind.index(num_ind)
       print("SNP ancestry dosage conversion is " + str(progress * 5) + "% complete.")
 anc_dosage_write.close() #yay we're done!
-os.system("cd ..")
 print("Completed writing individual, SNP, and SNP ancestry dosage file in loc_anc_input/ to " + output_prefix + "_ind.txt, " + output_prefix + "_SNPs.txt and " + output_prefix + ".csv. Have a nice day!")
    
 
