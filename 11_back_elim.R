@@ -1,5 +1,6 @@
 #backward elimination of significant genes to determine which ones are independent
 #thank you to Ryan Schubert for cleaning this script up
+#by Angela Andaleon (aandaleon@luc.edu)
 library(argparse)
 library(data.table)
 library(MASS)
