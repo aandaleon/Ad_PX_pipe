@@ -1,3 +1,5 @@
+#creates randomly simulated phenotypes and covariates for a sample population
+#by Angela Andaleon (aandaleon@luc.edu)
 library(argparse)
 library(data.table)
 library(dplyr)
