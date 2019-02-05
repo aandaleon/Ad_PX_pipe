@@ -1,5 +1,5 @@
 #Translates HAPI-UR and RFMix output into GEMMA-style input dosages to be used in a GEMMA wrapper
-#test input: angela@wheelerlab3:~/px_his_chol/local_anc_GEMMA/RFMix_output$ python 25_RFMix_loc_anc.py --phind HCHS_chr22.phind --phsnp test.phsnp --Viterbi test.Viterbi.txt --output_prefix RFMix_for_GEMMA_test
+#by Angela Andaleon (aandaleon@luc.edu)
 import argparse
 import numpy as np
 import pandas as pd
@@ -109,14 +109,14 @@ for ind in ind_list:
                 anc_dosage.append([ind_anc_row[0], "NA\tNA\tNA"]) #who knows
     else: #AFA
         anc_dosage = []
-        for ind_anc_row in ind_anc.itertuples(): #translate from RFMix codes to ancestry dosages
+        for ind_anc_row in ind_anc.itertuples(): 
             if ind_anc_row[1] == 1 and ind_anc_row[2] == 1:
                 anc_dosage.append([ind_anc_row[0], "2.0\t0.0"]) #both CEU
             elif ind_anc_row[1] == 2 and ind_anc_row[2] == 2:
                 anc_dosage.append([ind_anc_row[0], "0.0\t2.0"]) #both YRI
             elif (ind_anc_row[1] == 1 and ind_anc_row[2] == 2) or (ind_anc_row[1] == 2 and ind_anc_row[2] == 1):
                 anc_dosage.append([ind_anc_row[0], "1.0\t1.0"]) #one CEU, one YRI
-                anc_dosage.append([ind_anc_row[0], "NA\tNA"]) #who knows
+                anc_dosage.append([ind_anc_row[0], "NA\tNA"]) 
     anc_dosage_df = pd.DataFrame(anc_dosage)
     anc_dosage_df.columns = ["rs", ind]
     anc_dosage_df = anc_dosage_df.drop_duplicates()
