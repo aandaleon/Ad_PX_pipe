@@ -1,4 +1,5 @@
 #make GWAS output into GCTA-COJO format
+#by Angela Andaleon (aandaleon@luc.edu)
 import argparse
 import numpy as np
 import os
