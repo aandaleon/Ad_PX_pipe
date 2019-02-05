@@ -1,4 +1,5 @@
 #convert predicted expressions into GEMMA-format pseudo-genotypes
+#by Angela Andaleon (aandaleon@luc.edu)
 import argparse
 import pandas as pd
 import os
