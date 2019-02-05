@@ -1,5 +1,6 @@
 #runs a loop through all GTEx models and all MESA models to run the --predicted expression flag in PrediXcan
-#if you are using a new verison of GTEx, change the tissues array
+#if you are using a new verison of GTEx, change the tissues list
+#by Angela Andaleon (aandaleon@luc.edu)
 import argparse
 import os
 
