@@ -34,7 +34,7 @@ dosage_path = "dosages/"
 dosage_samples = pd.read_csv(dosage_path + "samples.txt", delim_whitespace = True, header = None) #read in samples.txt file from PrediXcan-style dosages
 dosage_samples = dosage_samples[[1]] #take only IIDs
 
-print("Starting conversion from PLINK dosage to GEMMA input BIMBAM and anno.")
+print("Starting conversion from PrediXcan dosage to GEMMA input BIMBAM and anno.")
 for i in chrs_to_test: #for each chr
     anno = open(anno_path + "anno" + str(i) + ".txt", "w") #start an annotation file
     BIMBAM = gzip.open(BIMBAM_path + "chr" + str(i) + ".txt.gz", "wb") #start a genotype file
