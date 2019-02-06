@@ -13,7 +13,7 @@ parser.add_argument("--refpop", type = str, action = "store", dest = "refpop", r
 
 #established part of using GEMMA
 parser.add_argument("--relatedness", type = str, action = "store", dest = "relatedness", required = False, default = "relatedness_woIID.txt", help = "Path to file containing relatedness matrix w/o IIDs for only individuals in analysis.")
-parser.add_argument("--chr", type = str, action = "store", dest = "BIMBAM", required = False, default = "BIMBAM/chr", help = "Path to file with BIMBAM-formatted genotypes.")
+parser.add_argument("--chr", type = str, action = "store", dest = "BIMBAM", required = False, help = "Path to file with BIMBAM-formatted genotypes.")
 parser.add_argument("--pheno", type = str, action = "store", dest = "pheno", required = False, default = "pheno_woIID.txt", help = "Path to file containing phenotypic information w/o IIDs for only individuals in analysis.")
 parser.add_argument("--covariates", type = str, action = "store", dest = "covariates", required = False, default = "GEMMA_covars.txt", help = "Path to file containing covariates w/o IIDs for only individuals in analysis.")
 parser.add_argument("--anno", type = str, action = "store", dest = "anno", required = False, default = "anno/anno" help = "Path to file containing the annotations.")
@@ -24,15 +24,13 @@ args = parser.parse_args()
 print("Reading input files.")
 loc_anc_cov = pd.read_csv(args.snptable, delimiter=',', encoding="utf-8-sig")
 os.system("zcat BIMBAM/chr" + args.BIMBAM + ".txt.gz | awk '{ print $1, $2, $3 }' > loc_anc_output/SNPs_" + args.BIMBAM + ".txt") #there's not really a point to loading the entire BIMBAM if I'm just using the first three cols
-#else:
-#    os.system("awk '{ print $1, $2, $3 }' BIMBAM/chr" + args.BIMBAM + " > loc_anc_output/SNPs_" + args.output + ".txt")
 SNPs = pd.read_csv("loc_anc_output/SNPs_" + args.BIMBAM + ".txt", delimiter=' ', encoding="utf-8-sig", header = None)
 
 #following are just to be used in GEMMA input
 if args.anno is None:
     anno = " "
 else:
-    anno = " -a " + args.anno + " "
+    anno = " -a " + args.anno + args.BIMBAM " "
 if args.covariates is None:
     covariates_file = " "
 else:
