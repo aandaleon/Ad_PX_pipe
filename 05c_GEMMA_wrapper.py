@@ -9,13 +9,13 @@ pd.options.mode.chained_assignment = None
 parser = argparse.ArgumentParser()
 parser.add_argument("--GWAS", action = "store_true", dest = "GWAS", default = False, help = "Include to perform GWAS")
 parser.add_argument("--pred_exp", action = "store_true", dest = "pred_exp", default = False, help = "Include to perform linear mixed model with predicted expression")
-parser.add_argument("--relatedness", type = str, action = "store", dest = "relatedness", required = True, help = "Path to file containing relatedness matrix w/o IIDs for only individuals in analysis.")
-parser.add_argument("--geno_prefix", type = str, action = "store", dest = "geno_prefix", default = "BIMBAM/chr", required = False, help = "Prefix of BIMBAM files Default = 'BIMBAM/chr'. If running with predicted expression, direct to converted pseudo-genotypes.")
+#parser.add_argument("--relatedness", type = str, action = "store", dest = "relatedness", required = True, help = "Path to file containing relatedness matrix w/o IIDs for only individuals in analysis.")
+#parser.add_argument("--geno_prefix", type = str, action = "store", dest = "geno_prefix", default = "BIMBAM/chr", required = False, help = "Prefix of BIMBAM files Default = 'BIMBAM/chr'. If running with predicted expression, direct to converted pseudo-genotypes.")
 parser.add_argument("--pheno", type = str, action = "store", dest = "pheno", required = True, help = "Path to file containing phenotypic information w/o IIDs for only individuals in analysis.")
-parser.add_argument("--pheno_names", type = str, action = "store", dest = "pheno_names", required = True, help = "Path to file containing names of phenotypes.")
+parser.add_argument("--pheno_names", type = str, action = "store", dest = "pheno_names", required = False, default = "pheno_names.txt", help = "Path to file containing names of phenotypes.")
 parser.add_argument("--covariates", type = str, action = "store", dest = "covariates", required = False, help = "Path to file containing covariates w/o IIDs for only individuals in analysis.")
 parser.add_argument("--anno", type = str, action = "store", dest = "anno", required = False, help = "(Optional) Path to file containing the annotations, including 'anno'.")
-parser.add_argument("--output", type = str, action = "store", dest = "output", required = False, default = "", help = "Name of output file")
+#parser.add_argument("--output", type = str, action = "store", dest = "output", required = False, default = "", help = "Name of output file")
 
 args = parser.parse_args()
 
@@ -32,11 +32,13 @@ else:
     covariates_file = " -c " + args.covariates + " "
 pheno_file = args.pheno
 pheno_names = args.pheno_names
-relatedness = args.relatedness
-if args.output is None or args.output == "":
-    output = ""
-else:
-    output = args.output
+#relatedness = args.relatedness
+relatedness = "relatedness_woIIDs.txt"
+#if args.output is None or args.output == "":
+#    output = ""
+#else:
+#    output = args.output
+output = ""
 geno_prefix = args.geno_prefix
 
 
