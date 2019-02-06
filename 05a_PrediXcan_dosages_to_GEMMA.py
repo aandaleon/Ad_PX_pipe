@@ -7,13 +7,13 @@ import os
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--desc", type = str, action = "store", dest = "desc", required = False, help = "Takes information from PrediXcan-style dosages to make SNP annotation and BIMBAM files for GEMMA.")
-parser.add_argument("--dosage_path", type = str, action = "store", dest = "dosage_path", required = True, help = "Path to folder containing dosages and samples.txt")
+#parser.add_argument("--dosage_path", type = str, action = "store", dest = "dosage_path", required = True, help = "Path to folder containing dosages and samples.txt")
 parser.add_argument("--chr", type = str, action = "store", dest = "chr", required = False, help = "Path to chromosome to analyze. If no input, analyzes all 22 pairs of chromosomes.")
 parser.add_argument("--dosage_suffix", type = str, action = "store", dest = "dosage_suffix", default = ".maf0.01.r20.8.dosage.txt.gz", help = "Suffix of dosages. Default = .maf0.01.r20.8.dosage.txt.gz")
 args = parser.parse_args()
 
 print("Reading input files.")
-dosage_path = args.dosage_path
+dosage_path = "dosages/"
 dosage_suffix = args.dosage_suffix
 BIMBAM_path = "BIMBAM/" #this was going to be a user option but I didn't see a point
 anno_path = "anno/"
