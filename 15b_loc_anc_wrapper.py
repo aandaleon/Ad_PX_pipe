@@ -12,22 +12,21 @@ parser.add_argument("--snptable", type = str, action = "store", dest = "snptable
 parser.add_argument("--refpop", type = str, action = "store", dest = "refpop", required = True, help = "Reference population (AFA or HIS)")
 
 #established part of using GEMMA
-parser.add_argument("--relatedness", type = str, action = "store", dest = "relatedness", required = True, help = "Path to file containing relatedness matrix w/o IIDs for only individuals in analysis.")
-parser.add_argument("--BIMBAM", type = str, action = "store", dest = "BIMBAM", required = True, help = "Path to file with BIMBAM-formatted genotypes.")
-parser.add_argument("--pheno", type = str, action = "store", dest = "pheno", required = True, help = "Path to file containing phenotypic information w/o IIDs for only individuals in analysis.")
-parser.add_argument("--covariates", type = str, action = "store", dest = "covariates", required = False, help = "Path to file containing covariates w/o IIDs for only individuals in analysis.")
+parser.add_argument("--relatedness", type = str, action = "store", dest = "relatedness", required = False, default = "relatedness_woIID.txt", help = "Path to file containing relatedness matrix w/o IIDs for only individuals in analysis.")
+parser.add_argument("--chr", type = str, action = "store", dest = "BIMBAM", required = True, help = "Path to file with BIMBAM-formatted genotypes.")
+parser.add_argument("--pheno", type = str, action = "store", dest = "pheno", required = False, default = "pheno_woIID.txt", help = "Path to file containing phenotypic information w/o IIDs for only individuals in analysis.")
+parser.add_argument("--covariates", type = str, action = "store", dest = "covariates", required = False, default = "GEMMA_covars.txt", help = "Path to file containing covariates w/o IIDs for only individuals in analysis.")
 parser.add_argument("--anno", type = str, action = "store", dest = "anno", required = False, help = "Path to file containing the annotations.")
-parser.add_argument("--output", type = str, action = "store", dest = "output", required = False, default = "", help = "Name of output file")
+#parser.add_argument("--output", type = str, action = "store", dest = "output", required = False, default = "", help = "Name of output file")
 parser.add_argument("--pheno_names", type = str, action = "store", dest = "pheno_names", required = False, default = "pheno_names.txt", help = "File containing pheno names. Default = 'pheno_names.txt'.")
 args = parser.parse_args()
 
 print("Reading input files.")
 loc_anc_cov = pd.read_csv(args.snptable, delimiter=',', encoding="utf-8-sig")
-if args.BIMBAM.endswith(".gz"):
-    os.system("zcat " + args.BIMBAM + " | awk '{ print $1, $2, $3 }' > loc_anc_output/SNPs_" + args.output + ".txt") #there's not really a point to loading the entire BIMBAM if I'm just using the first three cols
-else:
-    os.system("awk '{ print $1, $2, $3 }' " + args.BIMBAM + " > loc_anc_output/SNPs_" + args.output + ".txt")
-SNPs = pd.read_csv("loc_anc_output/SNPs_" + args.output + ".txt", delimiter=' ', encoding="utf-8-sig", header = None)
+os.system("zcat BIMBAM/chr" + args.BIMBAM + ".txt.gz | awk '{ print $1, $2, $3 }' > loc_anc_output/SNPs_" + args.BIMBAM + ".txt") #there's not really a point to loading the entire BIMBAM if I'm just using the first three cols
+#else:
+#    os.system("awk '{ print $1, $2, $3 }' BIMBAM/chr" + args.BIMBAM + " > loc_anc_output/SNPs_" + args.output + ".txt")
+SNPs = pd.read_csv("loc_anc_output/SNPs_" + args.BIMBAM + ".txt", delimiter=' ', encoding="utf-8-sig", header = None)
 
 #following are just to be used in GEMMA input
 if args.anno is None:
@@ -41,7 +40,7 @@ else:
 pheno_file = args.pheno
 pheno_names = list(np.loadtxt(args.pheno_names, dtype = str))
 relatedness = args.relatedness
-output = args.output
+output = args.BIMBAM
 refpop = args.refpop
 
 '''
@@ -164,7 +163,7 @@ for pheno_num, pheno_name in zip(pheno, pheno_names):
     print("Ending analyses on " + pheno_name + ".")
 
 print("Removing extra files.")
-os.system("rm -f loc_anc_output/SNPs_" + args.output + ".txt") #cause I'm petty and GEMMA is annoying for not directing output
+os.system("rm -f loc_anc_output/SNPs_" + args.BIMBAM + ".txt") #cause I'm petty and GEMMA is annoying for not directing output
 os.system("mv output/* loc_anc_output/")
 os.system("rm -r output/")
 if refpop == "HIS":
