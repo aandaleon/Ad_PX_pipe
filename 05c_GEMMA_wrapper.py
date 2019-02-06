@@ -32,8 +32,7 @@ else:
     covariates_file = " -c " + args.covariates + " "
 pheno_file = args.pheno
 pheno_names = args.pheno_names
-#relatedness = args.relatedness
-relatedness = "relatedness_woIIDs.txt"
+relatedness = args.relatedness
 #if args.output is None or args.output == "":
 #    output = ""
 #else:
