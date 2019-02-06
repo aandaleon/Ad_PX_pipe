@@ -9,14 +9,16 @@ library(R.utils) #I forgot why I had this
 
 parser <- ArgumentParser()
 parser$add_argument("--desc", help = "Perform a colocalization between GWAS results and eQTL data. This uses GTEx V6, so if you want V7, download those data and change paths accordingly.")
-parser$add_argument("--ma_prefix", help = "Prefix of .ma file (the input of GCTA-COJO)")
-parser$add_argument("--GWAS_prefix", help = "Prefix of GWAS results")
+#parser$add_argument("--ma_prefix", help = "Prefix of .ma file (the input of GCTA-COJO)")
+#parser$add_argument("--GWAS_prefix", help = "Prefix of GWAS results")
 parser$add_argument("--sample_size", help = "Sample size of GWAS cohort")
 parser$add_argument("--pheno_names", default = "pheno_names.txt", help = "File of pheno names. Defauly = 'pheno_names.txt'")
 args <- parser$parse_args()
 
-ma_prefix <- args$ma_prefix
-GWAS_prefix <- args$GWAS_prefix
+#ma_prefix <- args$ma_prefix
+#GWAS_prefix <- args$GWAS_prefix
+ma_prefix = ""
+GWAS_prefix = ""
 sample_size <- args$sample_size
 pheno_names <- args$pheno_names
 
@@ -54,7 +56,7 @@ for(tissue in 1:length(tissues)){ #read in tissue's .frq file for MAF
   }
   
   for(pheno_name in pheno_names){ #how do I structure this so I don't have to load GTEx multiple times  
-    GWAS_SNPs <- fread(ma_prefix %&% "_" %&% pheno_name %&% ".ma", header = T)$rs
+    GWAS_SNPs <- fread(pheno_name %&% ".ma", header = T)$rs
     eQTL_write <- data.frame(gene_id = character(), variant_id = character(), maf = numeric(), pval_nominal = numeric(), slope = numeric(), slope_se = numeric(), stringsAsFactors = F) 
     GWAS_write <- data.frame(panel_variant_id = character(), effect_size = numeric(), standard_error = numeric(), frequency = numeric(), sample_size = numeric(), stringsAsFactors = F) 
     
@@ -73,7 +75,7 @@ for(tissue in 1:length(tissues)){ #read in tissue's .frq file for MAF
     }
 
     for(chr in chrs){ #yes triple loops are ratchet
-      GEMMA_result <- fread("output/" %&% GWAS_prefix %&% "_" %&% pheno_name %&% "_chr" %&% chr %&% ".assoc.txt", header = F, nThread = 30)
+      GEMMA_result <- fread("output/" %&% pheno_name %&% "_chr" %&% chr %&% ".assoc.txt", header = F, nThread = 30)
       colnames(GEMMA_result) <- c("chr", "rs", "ps", "n_miss", "allele1", "allele0", "af", "beta", "se", "l_remle", "l_mle", "p_wald", "p_lrt", "p_score")
       GEMMA_result$chr_pos <- paste(gsub("chr", "", GEMMA_result$chr), GEMMA_result$ps, sep = ":")
       GEMMA_for_COLOC <- GEMMA_result %>% dplyr::select(rs, beta, se, af) #subset to COLOC input
@@ -103,10 +105,10 @@ for(tissue in 1:length(tissues)){ #read in tissue's .frq file for MAF
     eQTL_write <- subset(eQTL_write, variant_id %in% snps_in_all)
     eQTL_write <- eQTL_write[order(eQTL_write$gene_id),] #results are weird when not ordered
   
-    fwrite(eQTL_write, "COLOC_input/" %&% GWAS_prefix %&% "_" %&% pheno_name %&% "_eQTL_" %&% tissues[tissue] %&% ".txt", quote = F, sep = "\t", na = "NA", row.names = F, col.names = T)
-    gzip("COLOC_input/" %&% GWAS_prefix %&% "_" %&% pheno_name %&% "_eQTL_" %&% tissues[tissue] %&% ".txt", destname = "COLOC_input/" %&% GWAS_prefix %&% "_" %&% pheno_name %&% "_eQTL_" %&% tissues[tissue] %&% ".txt.gz", overwrite = T) #script may only take .gz values so can't hurt to be too careful
-    fwrite(GWAS_write, "COLOC_input/" %&% GWAS_prefix %&% "_" %&% pheno_name %&% "_GWAS_" %&% tissues[tissue] %&% ".txt", row.names = F, col.names = T, sep = "\t", quote = F, na = "NA")
-    gzip("COLOC_input/" %&% GWAS_prefix %&% "_" %&% pheno_name %&% "_GWAS_" %&% tissues[tissue] %&% ".txt", "COLOC_input/" %&% GWAS_prefix %&% "_" %&% pheno_name %&% "_GWAS_" %&% tissues[tissue] %&% ".txt.gz", overwrite = T)
+    fwrite(eQTL_write, "COLOC_input/" %&% pheno_name %&% "_eQTL_" %&% tissues[tissue] %&% ".txt", quote = F, sep = "\t", na = "NA", row.names = F, col.names = T)
+    gzip("COLOC_input/" %&% pheno_name %&% "_eQTL_" %&% tissues[tissue] %&% ".txt", destname = "COLOC_input/" %&% pheno_name %&% "_eQTL_" %&% tissues[tissue] %&% ".txt.gz", overwrite = T) #script may only take .gz values so can't hurt to be too careful
+    fwrite(GWAS_write, "COLOC_input/" %&% pheno_name %&% "_GWAS_" %&% tissues[tissue] %&% ".txt", row.names = F, col.names = T, sep = "\t", quote = F, na = "NA")
+    gzip("COLOC_input/" %&% pheno_name %&% "_GWAS_" %&% tissues[tissue] %&% ".txt", destname = "COLOC_input/" %&% pheno_name %&% "_GWAS_" %&% tissues[tissue] %&% ".txt.gz", overwrite = T)
     print("Completed with " %&% tissues[tissue] %&% ", for " %&% pheno_name %&%".")
   }
 }
