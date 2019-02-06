@@ -7,17 +7,19 @@ library(dplyr)
 
 parser <- ArgumentParser()
 parser$add_argument("--desc", help = "This script makes covariance file from known covariates and KING PCs.")
-parser$add_argument("--covar", help = "Covariance file (w/o IDs) produced in step 0", default = "cover_woIID.txt")
+#parser$add_argument("--covar", help = "Covariance file (w/o IDs) produced in step 0", default = "cover_woIID.txt")
 #parser$add_argument("--pcs_file", help = "Principal components file produced in step 2. Default = kingpc.ped", default = "kingpc.ped")
 parser$add_argument("--pcs_num", help = "Number of principal components to include in covariates file. Default = 5.", default = "5")
-parser$add_argument("--output", help = "Name of output file. Default = GEMMA_covars.txt", default = "GEMMA_covars.txt")
+#parser$add_argument("--output", help = "Name of output file. Default = GEMMA_covars.txt", default = "GEMMA_covars.txt")
 args <- parser$parse_args()
 
-covar_file_name <- args$covar
+#covar_file_name <- args$covar
 #pcs_file_name <- args$pcs_file
 pcs_file_name <- "kingpc.ped"
+covar_file_name <- "covar_woIID.txt"
 pcs_num <- as.integer(args$pcs_num)
-output <- args$output
+#output <- args$output
+output <- "GEMMA_covars.txt"
 
 '
 covar_file_name <- "covar_woIID.txt"
