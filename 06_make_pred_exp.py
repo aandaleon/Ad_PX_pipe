@@ -12,7 +12,7 @@ parser.add_argument("--MESA_prefix", type = str, action = "store", dest = "MESA_
 parser.add_argument("--MESA_suffix", type = str, action = "store", dest = "MESA_suffix", required = False, default = "_imputed_10_peer_3_pcs_2.db", help = "Path to suffix of all MESA models. Default = _imputed_10_peer_3.db")
 parser.add_argument("--GTEx_prefix", type = str, action = "store", dest = "GTEx_prefix", required = False, default = "/home/wheelerlab3/Data/PrediXcan_db/GTEx-V6p-HapMap-2016-09-08/TW_", help = "Path to prefix of all GTEx models. Default = /home/wheelerlab3/Data/PrediXcan_db/GTEx-V6p-HapMap-2016-09-08/TW_")
 parser.add_argument("--GTEx_suffix", type = str, action = "store", dest = "GTEx_suffix", required = False, default = "_0.5.db", help = "Path to suffix of all GTEx models. Default = _0.5.db")
-parser.add_argument("--output_prefix", type = str, action = "store", dest = "output_prefix", required = False, default = "pred_exp/", help = "Path to prefix PrediXcan predicted expression output. Default = pred_exp/")
+#parser.add_argument("--output_prefix", type = str, action = "store", dest = "output_prefix", required = False, default = "pred_exp/", help = "Path to prefix PrediXcan predicted expression output. Default = pred_exp/")
 args = parser.parse_args()
 
 pops = ["AFA", "AFHI", "ALL", "CAU", "HIS"] #all of Lauren's MESA models
@@ -24,7 +24,8 @@ MESA_prefix = args.MESA_prefix
 MESA_suffix = args.MESA_suffix
 GTEx_prefix = args.GTEx_prefix
 GTEx_suffix = args.GTEx_suffix
-output_prefix = args.output_prefix
+#output_prefix = args.output_prefix
+output_prefix = "pred_exp/"
 
 print("Starting creation of predicted expressions.")
 os.system("mkdir -p " + output_prefix) #make output folder if not already made
