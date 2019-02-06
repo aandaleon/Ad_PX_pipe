@@ -11,7 +11,7 @@ parser.add_argument("--fam", type = str, action = "store", dest = "fam", require
 parser.add_argument("--phind", type = str, action = "store", dest = "phind", required = True, help = "Path to .phind output by HAPI-UR.")
 parser.add_argument("--phsnp", type = str, action = "store", dest = "phsnp", required = True, help = "Path to .phsnp output by HAPI-UR")
 parser.add_argument("--Viterbi", type = str, action = "store", dest = "Viterbi", required = True, help = "Path to .Viterbi. output by RFMix")
-parser.add_argument("--output_prefix", type = str, action = "store", dest = "output_prefix", required = False, default = "RFMix_for_GEMMA", help = "Prefix for GEMMA-input ancestry file")
+parser.add_argument("--chr", type = str, action = "store", dest = "output_prefix", required = True, help = "Chromosome to test")
 args = parser.parse_args()
 
 print("Reading input files.")
@@ -24,7 +24,7 @@ del chunk
 phind = pd.read_table(args.phind, header = None, delim_whitespace = True)
 fam = pd.read_table(args.fam, header = None, delim_whitespace = True)
 phsnp = pd.read_table(args.phsnp, header = None, delim_whitespace = True)
-output_prefix = args.output_prefix
+output_prefix = "chr" + args.output_prefix
 
 ''' 
 #test data
