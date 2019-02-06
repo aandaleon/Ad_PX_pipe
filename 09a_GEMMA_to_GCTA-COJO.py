@@ -26,6 +26,6 @@ output_prefix = "AMR"
 
 num_ind = sum(1 for ind in open(fam, "r")) #https://stackoverflow.com/questions/845058/how-to-get-line-count-cheaply-in-python
 for pheno_name in pheno_names:
-    run_awk = "cat output/" + GWAS_prefix + "" + pheno_name + "_chr*assoc.txt | awk ' {print $2\"\\t\"$5\"\\t\"$6\"\\t\"$7\"\\t\"$8\"\\t\"$9\"\\t\"$12\"\\t\"" + str(num_ind) + "} ' > " + output_prefix + "_" + pheno_name + ".ma" #tabs are fun
+    run_awk = "cat output/" + GWAS_prefix + "" + pheno_name + "_chr*assoc.txt | awk ' {print $2\"\\t\"$5\"\\t\"$6\"\\t\"$7\"\\t\"$8\"\\t\"$9\"\\t\"$12\"\\t\"" + str(num_ind) + "} ' > " + pheno_name + ".ma" #tabs are fun
     os.system(run_awk) #awk is nice and fast and so I don't have to load things; hooray bash for reorganizing data
     print("Output is in " + pheno_name + ".ma")
