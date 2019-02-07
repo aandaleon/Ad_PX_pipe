@@ -23,8 +23,8 @@ args = parser.parse_args()
 
 print("Reading input files.")
 loc_anc_cov = pd.read_csv(args.snptable, delimiter=',', encoding="utf-8-sig")
-os.system("zcat BIMBAM/chr" + args.BIMBAM + ".txt.gz | awk '{ print $1, $2, $3 }' > loc_anc_output/SNPs_" + args.BIMBAM + ".txt") #there's not really a point to loading the entire BIMBAM if I'm just using the first three cols
-SNPs = pd.read_csv("loc_anc_output/SNPs_" + args.BIMBAM + ".txt", delimiter=' ', encoding="utf-8-sig", header = None)
+os.system("zcat BIMBAM/chr" + args.BIMBAM + ".txt.gz | awk '{ print $1, $2, $3 }' > loc_anc_input/SNPs_" + args.BIMBAM + ".txt") #there's not really a point to loading the entire BIMBAM if I'm just using the first three cols
+SNPs = pd.read_csv("loc_anc_input/SNPs_" + args.BIMBAM + ".txt", delimiter=' ', encoding="utf-8-sig", header = None)
 
 #following are just to be used in GEMMA input
 if args.anno is None:
