@@ -12,7 +12,7 @@ tissues_sample_size= ["233", "578", "352", "585", "1163", "298", "298", "126", "
 parser = argparse.ArgumentParser() #I could do this in bash but flag passing in bash is terrible
 parser.add_argument("--desc", type = str, action = "store", dest = "desc", required = False, help = "make GWAS output into GCTA-COJO format")
 #parser.add_argument("--prefix", type = str, action = "store", dest = "prefix", required = True, help = "Prefix of input files (not including 'COLOC_input/').")
-parser.add_argument("--GWAS_sample_size", type = str, action = "store", dest = "GWAS_sample_size", required = True, help = "Sample size of GWAS.")
+parser.add_argument("--sample_size", type = str, action = "store", dest = "GWAS_sample_size", required = True, help = "Sample size of GWAS.")
 parser.add_argument("--pheno_names", type = str, action = "store", dest = "pheno_names", required = False, default = "pheno_names.txt", help = "File containing pheno names. Default = 'pheno_names.txt'.")
 args = parser.parse_args()
 
