@@ -48,7 +48,7 @@ For much more detail on the process of everything in here, please see the [wiki]
     * a. Make GWAS output into GCTA-COJO format 
       * `python 09a_GEMMA_to_GCTA-COJO.py --fam AMR.fam`
     * b. Run GCTA (see [manual](https://cnsgenomics.com/software/gcta/#COJO))
-      * `gcta64 --cojo-file pheno1.ma --cojo-slct --cojo-p 5e-4 --bfile AMR --cojo-actual-geno --out pheno1; gcta64 --cojo-file pheno2.ma --cojo-slct --cojo-p 5e-4 --bfile AMR --cojo-actual-geno --out pheno2`
+      * `gcta64 --cojo-file pheno1.ma --cojo-slct --cojo-p 5e-5 --bfile AMR --cojo-actual-geno --out pheno1; gcta64 --cojo-file pheno2.ma --cojo-slct --cojo-p 5e-5 --bfile AMR --cojo-actual-geno --out pheno2`
         * Again, set P arbitrarily low for example; set to 5e-8 for real analyses
 
 10. Perform colocalization between GWAS results and eQTL data using [COLOC](https://cran.r-project.org/web/packages/coloc/coloc.pdf) in a [COLOC wrapper](https://github.com/hakyimlab/summary-gwas-imputation)
