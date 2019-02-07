@@ -55,7 +55,7 @@ For much more detail on the process of everything in here, please see the [wiki]
     * a. Put GWAS and eQTL data into COLOC input format (takes a while due to size of eQTL files)
       * `Rscript 10a_make_COLOC_input.R --sample_size 347`
     * b. Run COLOC wrapper (takes a while due to size of eQTL files)
-      * `python 10b_COLOC_wrapper.py --GWAS_sample_size 347`
+      * `python 10b_COLOC_wrapper.py --sample_size 347`
 
 11. Perform backward elimination modeling of all significant genes to find independent signals in R
     * `Rscript 11_back_elim.R --sig_gene output/pheno1_sig_genes.txt --pheno pheno_wIID.txt --pheno_name pheno1`
