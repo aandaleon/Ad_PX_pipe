@@ -82,6 +82,6 @@ For much more detail on the process of everything in here, please see the [wiki]
     
 15. Perform admixture mapping in [GEMMA](http://www.xzlab.org/software/GEMMAmanual.pdf)
     * a. Convert RFMix output into an intermediate for GEMMA input downstream
-      * `python 15a_RFMix_to_BIMBAM.py --Viterbi RFMix/chr22.rfmix.2.Viterbi.txt --phind haplotypes/chr22.phind --fam AMR.fam --phsnp haplotypes/chr22.phsnp --output_prefix chr22`
+      * `python 15a_RFMix_to_BIMBAM.py --Viterbi RFMix/chr22.rfmix.2.Viterbi.txt --phind haplotypes/chr22.phind --fam AMR.fam --phsnp haplotypes/chr22.phsnp --chr 22`
     * b. Run phenotype associations with each local ancestry in GEMMA
       * `python 15b_loc_anc_wrapper.py --snptable loc_anc_input/chr22.csv --refpop HIS --chr 22`
