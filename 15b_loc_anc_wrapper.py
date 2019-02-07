@@ -16,7 +16,7 @@ parser.add_argument("--relatedness", type = str, action = "store", dest = "relat
 parser.add_argument("--chr", type = str, action = "store", dest = "BIMBAM", required = False, help = "Path to file with BIMBAM-formatted genotypes.")
 parser.add_argument("--pheno", type = str, action = "store", dest = "pheno", required = False, default = "pheno_woIID.txt", help = "Path to file containing phenotypic information w/o IIDs for only individuals in analysis.")
 parser.add_argument("--covariates", type = str, action = "store", dest = "covariates", required = False, default = "GEMMA_covars.txt", help = "Path to file containing covariates w/o IIDs for only individuals in analysis.")
-parser.add_argument("--anno", type = str, action = "store", dest = "anno", required = False, default = "anno/anno" help = "Path to file containing the annotations.")
+parser.add_argument("--anno", type = str, action = "store", dest = "anno", required = False, default = "anno/anno", help = "Path to file containing the annotations.")
 #parser.add_argument("--output", type = str, action = "store", dest = "output", required = False, default = "", help = "Name of output file")
 parser.add_argument("--pheno_names", type = str, action = "store", dest = "pheno_names", required = False, default = "pheno_names.txt", help = "File containing pheno names. Default = 'pheno_names.txt'.")
 args = parser.parse_args()
