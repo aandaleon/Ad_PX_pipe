@@ -41,14 +41,14 @@ For much more detail on the process of everything in here, please see the [wiki]
       * `python 05c_GEMMA_wrapper.py --pred_exp`    
 
 08. Find significant SNPs from GWAS and significant genes from PrediXcan in R
-    * `python 08_sig_SNP_sig_gene.py --SNP_sig 5e-4 --gene_sig 0.05`
+    * `python 08_sig_SNP_sig_gene.py --SNP_sig 5e-6 --gene_sig 5e-3`
       * NOTE: I set these thresholds arbitrarilty low so we have significant genes to with with later. Usually, use the defaults, 5e-8 and 9.654e-6, respectively.
 
 09. Calculate independent significant SNPs in a joint analysis in [GCTA-COJO](https://cnsgenomics.com/software/gcta/#COJO)
     * a. Make GWAS output into GCTA-COJO format 
       * `python 09a_GEMMA_to_GCTA-COJO.py --fam AMR.fam`
     * b. Run GCTA (see [manual](https://cnsgenomics.com/software/gcta/#COJO))
-      * `gcta64 --cojo-file pheno1.ma --cojo-slct --cojo-p 5e-5 --bfile AMR --cojo-actual-geno --out pheno1; gcta64 --cojo-file pheno2.ma --cojo-slct --cojo-p 5e-5 --bfile AMR --cojo-actual-geno --out pheno2`
+      * `gcta64 --cojo-file pheno1.ma --cojo-slct --cojo-p 5e-6 --bfile AMR --cojo-actual-geno --out pheno1; gcta64 --cojo-file pheno2.ma --cojo-slct --cojo-p 5e-6 --bfile AMR --cojo-actual-geno --out pheno2`
         * Again, set P arbitrarily low for example; set to 5e-8 for real analyses
 
 10. Perform colocalization between GWAS results and eQTL data using [COLOC](https://cran.r-project.org/web/packages/coloc/coloc.pdf) in a [COLOC wrapper](https://github.com/hakyimlab/summary-gwas-imputation)
