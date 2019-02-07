@@ -53,9 +53,9 @@ For much more detail on the process of everything in here, please see the [wiki]
 
 10. Perform colocalization between GWAS results and eQTL data using [COLOC](https://cran.r-project.org/web/packages/coloc/coloc.pdf) in a [COLOC wrapper](https://github.com/hakyimlab/summary-gwas-imputation)
     * a. Put GWAS and eQTL data into COLOC input format (takes a while due to size of eQTL files)
-      * `Rscript 10a_make_COLOC_input.R --sample_size 347`
+      * `Rscript 10a_make_COLOC_input.R --sample_size 320`
     * b. Run COLOC wrapper (takes a while due to size of eQTL files)
-      * `python 10b_COLOC_wrapper.py --sample_size 347`
+      * `python 10b_COLOC_wrapper.py --sample_size 320`
 
 11. Perform backward elimination modeling of all significant genes to find independent signals in R
     * `Rscript 11_back_elim.R --sig_gene output/pheno1_sig_genes.txt --pheno pheno_wIID.txt --pheno_name pheno1`
