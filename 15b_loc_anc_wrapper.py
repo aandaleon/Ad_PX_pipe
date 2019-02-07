@@ -161,9 +161,7 @@ for pheno_num, pheno_name in zip(pheno, pheno_names):
     print("Ending analyses on " + pheno_name + ".")
 
 print("Removing extra files.")
-os.system("rm -f loc_anc_output/SNPs_" + args.BIMBAM + ".txt") #cause I'm petty and GEMMA is annoying for not directing output
-os.system("mv output/* loc_anc_output/")
-os.system("rm -r output/")
+os.system("rm -f loc_anc_input/SNPs_" + args.BIMBAM + ".txt") #cause I'm petty and GEMMA is annoying for not directing output
 if refpop == "HIS":
     os.system("rm -f BIMBAM/IBS" + output + ".txt.gz")
     os.system("rm -f BIMBAM/NAT" + output + ".txt.gz")
@@ -177,3 +175,4 @@ elif refpop == "AFA":
     os.system("rm -f BIMBAM/CEU" + output + ".txt")
     os.system("rm -f BIMBAM/YRI" + output + ".txt")
 print("Analyses in all phenotypes is complete. Have a nice day :)!")
+
