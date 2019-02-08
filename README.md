@@ -12,6 +12,7 @@ For much more detail on the process of everything in here, please see the [wiki]
     * Test data has already been filtered
 
 02. Calculate principal components and a relationship matrix in [KING](http://people.virginia.edu/~wc9c/KING/manual.html)
+    * If your data runs into a segmentation fault, try using only a subset of SNPs (ex. restrict to chr. 22)
     * `Rscript 02_relate_matrix_PCs.R --bfile AMR`
  
 03. Impute data with the [Michigan Imputation Server](https://imputationserver.sph.umich.edu/index.html#!)
