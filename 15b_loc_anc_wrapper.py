@@ -152,11 +152,11 @@ for pheno_num, pheno_name in zip(pheno, pheno_names):
     print("Starting analyses on " + pheno_name + ".")
     if refpop == "HIS":
         for pop in ['NAT', 'IBS', 'YRI']:
-            GEMMA_command = "gemma -g BIMBAM/" + pop + output + ".txt.gz -p " + pheno_file + " -n " + str(pheno_num) + anno + args.BIMBAM + ".txt -k " + relatedness + covariates_file + " -lmm 4 -notsnp -o " + pheno_name + "_" + pop
+            GEMMA_command = "gemma -g BIMBAM/" + pop + output + ".txt.gz -p " + pheno_file + " -n " + str(pheno_num) + anno + " -k " + relatedness + covariates_file + " -lmm 4 -notsnp -o " + pheno_name + "_" + pop
             os.system(GEMMA_command + " >> GEMMA_log.txt")
     elif refpop == "AFA":
         for pop in ['CEU', 'YRI']:
-            GEMMA_command = "gemma -g BIMBAM/" + pop + output + ".txt.gz -p " + pheno_file + " -n " + str(pheno_num) + anno + args.BIMBAM + ".txt -k " + relatedness + covariates_file + " -lmm 4 -notsnp -o " + pheno_name + "_" + pop
+            GEMMA_command = "gemma -g BIMBAM/" + pop + output + ".txt.gz -p " + pheno_file + " -n " + str(pheno_num) + anno + " -k " + relatedness + covariates_file + " -lmm 4 -notsnp -o " + pheno_name + "_" + pop
             os.system(GEMMA_command + " >> GEMMA_log.txt")
     print("Ending analyses on " + pheno_name + ".")
 
