@@ -4,6 +4,7 @@ In this lab, we also use many external plotting tools, such as:
 * [LocusZoom](http://locuszoom.org/)
 * [Geography of Genetic Variants Browser](https://popgen.uchicago.edu/ggv/?data=%221000genomes%22&chr=11&pos=116663707)
 
+The plots in this folder include:
 * pca plot, parallel coordinates (HCHS paper, fig. 1)
 * qqplot
 * manhattan plot - SNP
