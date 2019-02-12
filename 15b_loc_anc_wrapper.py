@@ -30,7 +30,7 @@ SNPs = pd.read_csv("loc_anc_input/SNPs_" + args.BIMBAM + ".txt", delimiter=' ', 
 if args.anno is None:
     anno = " "
 else:
-    anno = " -a " + args.anno + args.BIMBAM + " "
+    anno = " -a " + args.anno + args.BIMBAM + ".txt "
 if args.covariates is None:
     covariates_file = " "
 else:
