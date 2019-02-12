@@ -11,6 +11,7 @@ parser.add_argument("--fam", type = str, action = "store", dest = "fam", require
 parser.add_argument("--phind", type = str, action = "store", dest = "phind", required = True, help = "Path to .phind output by HAPI-UR.")
 parser.add_argument("--phsnp", type = str, action = "store", dest = "phsnp", required = True, help = "Path to .phsnp output by HAPI-UR")
 parser.add_argument("--Viterbi", type = str, action = "store", dest = "Viterbi", required = True, help = "Path to .Viterbi. output by RFMix")
+parser.add_argument("--RefPop", type = str, action = "store", dest = "RefPop", required = True, help = "Reference population (AFA or HIS)")
 parser.add_argument("--chr", type = str, action = "store", dest = "output_prefix", required = True, help = "Chromosome to test")
 args = parser.parse_args()
 
@@ -25,19 +26,22 @@ phind = pd.read_table(args.phind, header = None, delim_whitespace = True)
 fam = pd.read_table(args.fam, header = None, delim_whitespace = True)
 phsnp = pd.read_table(args.phsnp, header = None, delim_whitespace = True)
 output_prefix = "chr" + args.output_prefix
+refpop = args.RefPop
 
 ''' 
 #test data
 Viterbi_chunks = []
-for chunk in pd.read_table("RFMix/chr2.rfmix.2.Viterbi.txt", header = None, delim_whitespace = True, chunksize = 20000):
+for chunk in pd.read_table("RFMix/chr22.rfmix.2.Viterbi.txt", header = None, delim_whitespace = True, chunksize = 20000):
     Viterbi_chunks.append(chunk) #when your data too thicc
 Viterbi = pd.concat(Viterbi_chunks, axis = 0).transpose()
 del Viterbi_chunks
 del chunk
-phind = pd.read_table("haplotypes/chr2.phind", header = None, delim_whitespace = True)
-fam = pd.read_table("AMR.fam", header = None, delim_whitespace = True)
-phsnp = pd.read_table("haplotypes/chr2.phsnp", header = None, delim_whitespace = True)
-output_prefix = "chr2"
+phind = pd.read_table("haplotypes/chr22.phind", header = None, delim_whitespace = True)
+fam = pd.read_table("1000G_AFA.fam", header = None, delim_whitespace = True)
+phsnp = pd.read_table("haplotypes/chr22.phsnp", header = None, delim_whitespace = True)
+output_prefix = "chr" + "22"
+refpop = "AFA"
+#python 15a_RFMix_to_BIMBAM.py --RefPop AFA --Viterbi RFMix/chr22.rfmix.2.Viterbi.txt --phind haplotypes/chr22.phind --fam 1000G_AFA.fam --phsnp haplotypes/chr22.phsnp --chr 22
 '''
 
 #make some folders
@@ -46,12 +50,6 @@ os.system("mkdir -p loc_anc_input/")
 #restrict data to just admixed inds
 n_ind = len(fam) * 2
 phind = phind.tail(n_ind)
-
-if max(Viterbi[0].tolist()) == 3:
-    refpop = "HIS"
-else:
-    refpop = "AFA"
-
 Viterbi = Viterbi.tail(n_ind)
 haps = [x.split(':')[-1] for x in phind[0].tolist()] 
 
@@ -115,6 +113,7 @@ for ind in ind_list:
                 anc_dosage.append([ind_anc_row[0], "0.0\t2.0"]) #both YRI
             elif (ind_anc_row[1] == 1 and ind_anc_row[2] == 2) or (ind_anc_row[1] == 2 and ind_anc_row[2] == 1):
                 anc_dosage.append([ind_anc_row[0], "1.0\t1.0"]) #one CEU, one YRI
+            else:
                 anc_dosage.append([ind_anc_row[0], "NA\tNA"]) #who knows
     anc_dosage_df = pd.DataFrame(anc_dosage)
     anc_dosage_df.columns = ["rs", ind]
