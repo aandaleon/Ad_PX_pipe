@@ -5,7 +5,8 @@ In this lab, we also use many external plotting tools, such as:
 * [Geography of Genetic Variants Browser](https://popgen.uchicago.edu/ggv/?data=%221000genomes%22&chr=11&pos=116663707)
 
 The plots in this folder include:
-P1. Parallel coordinates plot, with principal components on the x-axis and eigenvalues on the y-axis for the first 5 PCs calculated by KING
+
+* P1. Parallel coordinates plot, with principal components on the x-axis and eigenvalues on the y-axis for the first 5 PCs calculated by KING
   * `Rscript P1_rotation_plot.R`
   
 ![](https://i.imgur.com/ThDW8b4.png)
