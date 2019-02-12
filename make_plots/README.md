@@ -7,6 +7,7 @@ In this lab, we also use many external plotting tools, such as:
 The plots in this folder include:
 
 * P1. Parallel coordinates plot, with principal components on the x-axis and eigenvalues on the y-axis for the first 5 PCs calculated by KING
+  * Must have a `region.txt` file in the main folder
   * `Rscript P1_rotation_plot.R`
   
 ![](https://i.imgur.com/ThDW8b4.png)
