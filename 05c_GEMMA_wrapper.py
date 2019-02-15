@@ -51,7 +51,7 @@ geno_prefix = "BIMBAM/chr"
 output = "AMR"
 '''
 
-pheno_names = list(np.loadtxt(pheno_names, dtype = "str"))
+pheno_names = list(np.loadtxt(pheno_names, dtype = "str", ndmin = 1)) #phenos as list
 pheno_nums = range(1, len(pheno_names) + 1) #cause GEMMA does things by indexes
 
 if not GWAS and not pred_exp:
