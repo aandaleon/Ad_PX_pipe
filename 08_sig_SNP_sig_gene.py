@@ -16,7 +16,7 @@ SNP_sig = float(args.SNP_sig)
 gene_sig = float(args.gene_sig)
 #input_prefix = args.input_prefix
 input_prefix = ""
-pheno_names = list(np.loadtxt(args.pheno_names, dtype = str))
+pheno_names = list(np.loadtxt(args.pheno_names, dtype = "str", ndmin = 1))
 
 '''
 SNP_sig = 5e-8
