@@ -16,7 +16,7 @@ fam = args.fam
 #GWAS_prefix = args.GWAS_prefix
 #output_prefix = args.output_prefix
 GWAS_prefix = ""
-pheno_names = list(np.loadtxt(args.pheno_names, dtype = str))
+pheno_names = list(np.loadtxt(args.pheno_names, dtype = "str", ndmin = 1))
 
 '''
 fam = "AMR.fam"
